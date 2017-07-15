@@ -1,0 +1,5 @@
+interface DiagramInterface {
+    initDiagram();
+
+    getModel ();
+}

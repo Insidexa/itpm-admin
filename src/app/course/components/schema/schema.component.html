@@ -1,0 +1,19 @@
+<div class="col-md-12">
+
+    <select (change)="onSelectType()"  [(ngModel)]="schema.type" name="type">
+        <option [value]="null">Выберите</option>
+        <option *ngFor="let type of types" [value]="type.value">{{type.name}}</option>
+    </select>
+
+    <button (click)="getModel()">model</button>
+
+    <div class="row">
+        <div class="col-md-10">
+            <div #goJSDiagram style="width:100%; height:450px; background-color: #DAE4E4;"></div>
+        </div>
+        <div class="col-md-2">
+            <div id="palette" style="border: solid 1px black; height: 400px"></div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,47 @@
+<div class="col-md-12">
+    <form (ngSubmit)="save()">
+
+        <ul *ngIf="test">
+            <li *ngFor="let question of test.questions; let questionIndex = index" class="row">
+
+                <div class="col-md-12">
+
+                    <div class="form-group">
+                        <h6>Вопрос({{questionIndex + 1}}) - {{question.name}}</h6>
+                        <input type="text" class="form-control" name="question-{{questionIndex}}" [(ngModel)]="question.name">
+                    </div>
+                </div>
+
+                <div class="col-md-9 col-md-offset-3">
+                    <ul>
+                        <li *ngFor="let answer of question.answers; let answerIndex = index">
+                            <p>Ответ({{answerIndex + 1}}) - {{answer.name}}</p>
+                            <div class="row">
+                                <div class="col-md-10" [ngClass]="{'has-success': question.hash === answer.hash}">
+                                    <input [ngClass]="{'form-control-success': question.hash === answer.hash}"
+                                           class="form-control"
+                                           type="text"
+                                           name="question-{{questionIndex}}-answer-{{answerIndex}}"
+                                           [(ngModel)]="answer.name">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="radio"
+                                           [checked]="question.hash === answer.hash"
+                                           (click)="setRightAnswer(question, answer)">
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </li>
+
+        </ul>
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary btn-block">Сохранить</button>
+        </div>
+
+    </form>
+
+</div>
