@@ -36,7 +36,7 @@ export default class WBSOBS implements DiagramInterface {
         let self = this;
 
         let $ = go.GraphObject.make;
-        let myDiagram =
+        this.diagram =
             $(go.Diagram, this.div, // must be the ID or reference to div
                 {
                     initialContentAlignment: go.Spot.Center,
@@ -69,9 +69,9 @@ export default class WBSOBS implements DiagramInterface {
                 });
 
         // when the document is modified, add a "*" to the title and enable the "Save" button
-        myDiagram.addDiagramListener("Modified", function (e) {
+        this.diagram.addDiagramListener("Modified", (e) => {
             let idx = document.title.indexOf("*");
-            if (myDiagram.isModified) {
+            if (this.diagram.isModified) {
                 if (idx < 0) document.title += "*";
             } else {
                 if (idx >= 0) document.title = document.title.substr(0, idx);
@@ -79,10 +79,10 @@ export default class WBSOBS implements DiagramInterface {
         });
 
         // manage boss info manually when a node or link is deleted from the diagram
-        myDiagram.addDiagramListener("SelectionDeleting", function (e) {
+        this.diagram.addDiagramListener("SelectionDeleting", (e) => {
             let part = e.subject.first(); // e.subject is the myDiagram.selection collection,
                                           // so we'll get the first since we know we only have one selection
-            myDiagram.startTransaction("clear boss");
+            this.diagram.startTransaction("clear boss");
             if (part instanceof go.Node) {
                 let it = part.findTreeChildrenNodes(); // find all child nodes
                 while (it.next()) { // now iterate through them and clear out the boss information
@@ -97,21 +97,18 @@ export default class WBSOBS implements DiagramInterface {
                 if (bossText === null) return;
                 bossText['text'] = "";
             }
-            myDiagram.commitTransaction("clear boss");
+            this.diagram.commitTransaction("clear boss");
         });
 
-        let levelColors = ["#AC193D", "#2672EC", "#8C0095", "#5133AB",
-            "#008299", "#D24726", "#008A00", "#094AB2"];
-
         // override TreeLayout.commitNodes to also modify the background brush based on the tree depth level
-        myDiagram.layout.commitNodes = function () {
-            go.TreeLayout.prototype.commitNodes.call(myDiagram.layout);  // do the standard behavior
+        this.diagram.layout.commitNodes = () => {
+            go.TreeLayout.prototype.commitNodes.call(this.diagram.layout);  // do the standard behavior
             // then go through all of the vertexes and set their corresponding node's Shape.fill
             // to a brush dependent on the TreeVertex.level value
-            myDiagram.layout.network.vertexes.each(function (v) {
+            this.diagram.layout.network.vertexes.each(function (v) {
                 if (v.node) {
-                    let level = v.level % (levelColors.length);
-                    let color = levelColors[level];
+                    let level = v.level % (self.levelColors.length);
+                    let color = self.levelColors[level];
                     let shape = v.node.findObject("SHAPE");
                     if (shape) shape.fill = $(go.Brush, "Linear", {
                         0: color,
@@ -127,7 +124,7 @@ export default class WBSOBS implements DiagramInterface {
         // We used the counter combined with findNodeDataForKey to ensure uniqueness.
         function getNextKey() {
             let key = nodeIdCounter;
-            while (myDiagram.model.findNodeDataForKey(key) !== null) {
+            while (self.diagram.model.findNodeDataForKey(key) !== null) {
                 key = nodeIdCounter--;
             }
             return key;
@@ -140,10 +137,10 @@ export default class WBSOBS implements DiagramInterface {
             let clicked = obj.part;
             if (clicked !== null) {
                 let thisemp = clicked.data;
-                myDiagram.startTransaction("add employee");
+                self.diagram.startTransaction("add employee");
                 let newemp = {key: getNextKey(), name: "(название)", title: "", parent: thisemp.key, hash: self.hash()};
-                myDiagram.model.addNodeData(newemp);
-                myDiagram.commitTransaction("add employee");
+                self.diagram.model.addNodeData(newemp);
+                self.diagram.commitTransaction("add employee");
             }
         }
 
@@ -162,7 +159,7 @@ export default class WBSOBS implements DiagramInterface {
         }
 
         // define the Node template
-        myDiagram.nodeTemplate =
+        this.diagram.nodeTemplate =
             $(go.Node, "Auto",
                 {doubleClick: nodeDoubleClick},
                 { // handle dragging a Node onto a Node to (maybe) change the reporting relationship
@@ -231,62 +228,83 @@ export default class WBSOBS implements DiagramInterface {
                             new go.Binding("text", "key", function (v) {
                                 return "ID: " + v;
                             })),
-                        $(go.TextBlock, textStyle(),
-                            {name: "boss", row: 2, column: 3,}, // we include a name so we can access this TextBlock when deleting Nodes/Links
-                            new go.Binding("text", "parent", function (v) {
-                                return "Boss: " + v;
-                            })),
-                        $(go.TextBlock, textStyle(),  // the comments
+                        this.maker("CheckBox", "choice",
+                            /*new go.Binding('text', 'choice', (value, obj) => {
+                             console.log(obj['part'].data)
+                             let node = obj['part'].data;
+
+                             obj['part'].data.data.draggable = !!obj['part'].data.data.choice;
+
+                             console.log(obj['part'].data.data)
+
+                             if (value && !this.palette.model.containsNodeData(node)) {
+                             this.palette.model.addNodeData(node);
+                             } else {
+                             if (this.palette.model.containsNodeData(node)) {
+                             this.palette.model.removeNodeData(node);
+                             }
+                             }
+                             }),*/
                             {
-                                row: 3, column: 0, columnSpan: 5,
-                                font: "italic 9pt sans-serif",
-                                wrap: go.TextBlock.WrapFit,
-                                editable: true,  // by default newlines are allowed
-                                minSize: new go.Size(10, 14)
+                                name: "CHOICE_HIDDEN",
+                                row: 3,
+                                column: 0,
+                                "Button.width": 20,
+                                "Button.height": 20,
+                                "ButtonBorder.figure": "Circle",
+                                "ButtonBorder.stroke": "blue",
+                                "ButtonIcon.figure": "Circle",
+                                "ButtonIcon.fill": "blue",
+                                "ButtonIcon.strokeWidth": 0,
+                                "ButtonIcon.desiredSize": new go.Size(10, 10)
                             },
-                            new go.Binding("text", "comments").makeTwoWay())
+                            this.maker(go.TextBlock, {
+                                text: "hidden",
+                                name: "CHECKBOXDA"
+                            }),
+                            {
+                                "_doClick": (e, obj) => {
+
+                                    let node = obj.part.data;
+                                    let choice = obj.part.data.choice;
+
+                                    obj.part.data.draggable = !!obj.part.data.choice;
+
+                                    if (choice && !this.palette.model.containsNodeData(node)) {
+                                        this.palette.model.addNodeData(node);
+                                    } else {
+                                        if (this.palette.model.containsNodeData(node)) {
+                                            this.palette.model.removeNodeData(node);
+                                        }
+                                    }
+                                }
+                            }
+                        ),
                     )  // end Table Panel
                 ) // end Horizontal Panel
             );  // end Node
 
         // the context menu allows users to make a position vacant,
         // remove a role and reassign the subtree, or remove a department
-        myDiagram.nodeTemplate.contextMenu =
+        this.diagram.nodeTemplate.contextMenu =
             $(go.Adornment, "Vertical",
-                /*$("ContextMenuButton",
-                 $(go.TextBlock, "Vacate Position"),
-                 {
-                 click: function(e, obj) {
-                 let node = obj.part.adornedPart;
-                 if (node !== null) {
-                 let thisemp = node.data;
-                 myDiagram.startTransaction("vacate");
-                 // update the key, name, and comments
-                 myDiagram.model.setKeyForNodeData(thisemp, getNextKey());
-                 myDiagram.model.setDataProperty(thisemp, "name", "(Vacant)");
-                 myDiagram.model.setDataProperty(thisemp, "comments", "");
-                 myDiagram.commitTransaction("vacate");
-                 }
-                 }
-                 }
-                 ),*/
                 $("ContextMenuButton",
                     $(go.TextBlock, "Удалить ветку"),
                     {
-                        click: function (e, obj) {
+                        click: (e, obj) => {
                             // reparent the subtree to this node's boss, then remove the node
                             let node = obj.part.adornedPart;
                             if (node !== null) {
-                                myDiagram.startTransaction("reparent remove");
+                                this.diagram.startTransaction("reparent remove");
                                 let chl = node.findTreeChildrenNodes();
                                 // iterate through the children and set their parent key to our selected node's parent key
                                 while (chl.next()) {
                                     let emp = chl.value;
-                                    myDiagram.model.setParentKeyForNodeData(emp.data, node.findTreeParentNode().data.key);
+                                    this.diagram.model.setParentKeyForNodeData(emp.data, node.findTreeParentNode().data.key);
                                 }
                                 // and now remove the selected node itself
-                                myDiagram.model.removeNodeData(node.data);
-                                myDiagram.commitTransaction("reparent remove");
+                                this.diagram.model.removeNodeData(node.data);
+                                this.diagram.commitTransaction("reparent remove");
                             }
                         }
                     }
@@ -294,13 +312,13 @@ export default class WBSOBS implements DiagramInterface {
                 $("ContextMenuButton",
                     $(go.TextBlock, "Удалить дерево"),
                     {
-                        click: function (e, obj) {
+                        click: (e, obj) => {
                             // remove the whole subtree, including the node itself
                             let node = obj.part.adornedPart;
                             if (node !== null) {
-                                myDiagram.startTransaction("remove dept");
-                                myDiagram.removeParts(node.findTreeParts());
-                                myDiagram.commitTransaction("remove dept");
+                                this.diagram.startTransaction("remove dept");
+                                this.diagram.removeParts(node.findTreeParts());
+                                this.diagram.commitTransaction("remove dept");
                             }
                         }
                     }
@@ -308,12 +326,32 @@ export default class WBSOBS implements DiagramInterface {
             );
 
         // define the Link template
-        myDiagram.linkTemplate =
+        this.diagram.linkTemplate =
             $(go.Link, go.Link.Orthogonal,
                 {corner: 5, relinkableFrom: true, relinkableTo: true},
                 $(go.Shape, {strokeWidth: 4, stroke: "#00a4a4"}));  // the link shape
 
-        myDiagram.model = go.Model.fromJson(this.model);
+        this.diagram.model = go.Model.fromJson(this.model);
+
+        this.palette = this.maker(
+            go.Palette,
+            "palette",
+            {
+                nodeTemplate: $(
+                    go.Node,
+                    "Horizontal",
+                    $(
+                        go.TextBlock,
+                        {
+                            font: "12pt  Segoe UI,sans-serif",
+                            stroke: "black"
+                        },
+                        new go.Binding('text', 'name')
+                    )
+                ),
+                model: new go.GraphLinksModel([])
+            }
+        );
 
     }
 
