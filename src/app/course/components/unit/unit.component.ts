@@ -5,6 +5,7 @@ import {UnitService} from "./unit.service";
 import {Subscription} from "rxjs/Subscription";
 import {Test} from "../test/test";
 import {Theory} from "../theory/theory";
+import {Schema} from "../schema/schema";
 
 @Component({
     selector: 'unit',
@@ -16,6 +17,7 @@ export class UnitComponent implements OnInit, OnDestroy {
     private subEvent: Subscription;
     private subTest: Subscription;
     private subTheory: Subscription;
+    private subSchema: Subscription;
 
     constructor(
         private UnitService: UnitService,
@@ -40,6 +42,10 @@ export class UnitComponent implements OnInit, OnDestroy {
                     this.unit.theory = theory;
                 });
 
+                this.subSchema = this.UnitService.schema$.subscribe((schema: Schema) => {
+                    this.unit.schema = schema;
+                });
+
                 this.UnitService.pushUnit(unit);
 
                 this.unit = unit;
@@ -51,5 +57,6 @@ export class UnitComponent implements OnInit, OnDestroy {
         this.subEvent.unsubscribe();
         this.subTest.unsubscribe();
         this.subTheory.unsubscribe();
+        this.subSchema.unsubscribe();
     }
 }

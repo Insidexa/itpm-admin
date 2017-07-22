@@ -1,7 +1,11 @@
 import WBSOBS from "./types/WBSOBS";
 
-let instances = {
-    'wbs_obs': WBSOBS
-};
+let instances = [
+    {
+        value: 'WBSOBS',
+        'class': WBSOBS,
+        name: 'WBS/OBS'
+    }
+];
 
 export default instances;

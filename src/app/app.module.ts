@@ -41,7 +41,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule,
     ToastModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [
     AuthService,

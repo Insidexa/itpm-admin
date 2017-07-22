@@ -8,6 +8,7 @@ import {Unit} from "./unit";
 import {Subject} from "rxjs/Subject";
 import {Test} from "../test/test";
 import {Theory} from "../theory/theory";
+import {Schema} from "../schema/schema";
 
 @Injectable()
 export class UnitService {
@@ -17,11 +18,13 @@ export class UnitService {
     private unitSource = new Subject<Unit>();
     private testSource = new Subject<Test>();
     private theorySource = new Subject<Theory>();
+    private schemaSource = new Subject<Schema>();
     private eventSource = new Subject<string>();
 
     unit$ = this.unitSource.asObservable();
     test$ = this.testSource.asObservable();
     theory$ = this.theorySource.asObservable();
+    schema$ = this.schemaSource.asObservable();
     event$ = this.eventSource.asObservable();
 
     constructor(private http: HttpService) {
@@ -39,6 +42,10 @@ export class UnitService {
 
     pushTheory (theory: Theory) {
         this.theorySource.next(theory);
+    }
+
+    pushSchema (schema: Schema) {
+        this.schemaSource.next(schema);
     }
 
     callEvent(event: string) {

@@ -123,6 +123,18 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/platform-webworker-dynamic@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@angular/platform-webworker-dynamic/-/platform-webworker-dynamic-4.3.0.tgz#85ac2112d3231c6b203abcb19b35636f8577ded1"
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/platform-webworker@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@angular/platform-webworker/-/platform-webworker-4.3.0.tgz#4f45ab6a80269af5e0b6162973ebf4954f0c3caa"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/router@^4.0.0":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-4.2.3.tgz#4492431b1b05af85feb6dcc2b298382006b3a9da"

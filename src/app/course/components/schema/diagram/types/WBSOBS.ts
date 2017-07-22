@@ -1,17 +1,14 @@
 import * as go from "gojs";
+import Diagram from "./Diagram";
+import {ElementRef} from "@angular/core";
+import {Schema} from "../../schema";
 
-export default class WBSOBS implements DiagramInterface {
-    maker: any;
-    diagram: any;
-    div;
-
-    levelColors: Array<string> = ["#AC193D", "#2672EC", "#8C0095", "#5133AB", "#008299", "#D24726", "#008A00", "#094AB2"];
-
+export default class WBSOBS extends Diagram {
     model = {
         "class": "go.TreeModel",
         "nodeDataArray": [
             {"key": 1, "name": "some name", "title": "title", 'hash': this.hash()},
-            {"key": 2, "name": "Luke Warm", "title": "VP Marketing/Sales", "parent": 1, 'hash': this.hash()},
+            /*{"key": 2, "name": "Luke Warm", "title": "VP Marketing/Sales", "parent": 1, 'hash': this.hash()},
             {"key": 3, "name": "Meg Meehan Hoffa", "title": "Sales", "parent": 2},
             {"key": 4, "name": "Peggy Flaming", "title": "VP Engineering", "parent": 1},
             {"key": 5, "name": "Saul Wellingood", "title": "Manufacturing", "parent": 4},
@@ -25,34 +22,33 @@ export default class WBSOBS implements DiagramInterface {
             {"key": 13, "name": "Stan Wellback", "title": "Testing", "parent": 10},
             {"key": 14, "name": "Marge Innovera", "title": "Hardware", "parent": 10},
             {"key": 15, "name": "Evan Elpus", "title": "Quality", "parent": 5},
-            {"key": 16, "name": "Lotta B. Essen", "title": "Sales Rep", "parent": 3}
+            {"key": 16, "name": "Lotta B. Essen", "title": "Sales Rep", "parent": 3}*/
         ]
     };
-    palette: go.Palette;
 
-    constructor(diagramContainer: any) {
+    /**
+     *
+     * @param diagramContainer
+     */
+    constructor(diagramContainer: ElementRef) {
+        super();
+
         this.div = diagramContainer.nativeElement;
         this.maker = go.GraphObject.make;
         let self = this;
 
-        let $ = go.GraphObject.make;
         this.diagram =
-            $(go.Diagram, this.div, // must be the ID or reference to div
+            this.maker(go.Diagram, this.div, // must be the ID or reference to div
                 {
                     initialContentAlignment: go.Spot.Center,
                     maxSelectionCount: 1, // users can select only one part at a time
                     validCycle: go.Diagram.CycleDestinationTree, // make sure users can only create trees
                     "clickCreatingTool.archetypeNodeData": {}, // allow double-click in background to create a new node
                     "clickCreatingTool.insertPart": function (loc) {  // customize the data for the new node
-                        this.archetypeNodeData = {
-                            key: getNextKey(), // assign the key based on the number of nodes
-                            name: "(название)",
-                            title: "",
-                            hash: self.hash()
-                        };
+                        this.archetypeNodeData = self.getNode(getNextKey());
                         return go.ClickCreatingTool.prototype.insertPart.call(this, loc);
                     },
-                    layout: $(go.TreeLayout,
+                    layout: this.maker(go.TreeLayout,
                         {
                             treeStyle: go.TreeLayout.StyleLastParents,
                             arrangement: go.TreeLayout.ArrangementHorizontal,
@@ -105,12 +101,12 @@ export default class WBSOBS implements DiagramInterface {
             go.TreeLayout.prototype.commitNodes.call(this.diagram.layout);  // do the standard behavior
             // then go through all of the vertexes and set their corresponding node's Shape.fill
             // to a brush dependent on the TreeVertex.level value
-            this.diagram.layout.network.vertexes.each(function (v) {
+            this.diagram.layout.network.vertexes.each( (v) => {
                 if (v.node) {
                     let level = v.level % (self.levelColors.length);
                     let color = self.levelColors[level];
                     let shape = v.node.findObject("SHAPE");
-                    if (shape) shape.fill = $(go.Brush, "Linear", {
+                    if (shape) shape.fill = this.maker(go.Brush, "Linear", {
                         0: color,
                         1: go.Brush.lightenBy(color, 0.05),
                         start: go.Spot.Left,
@@ -138,7 +134,7 @@ export default class WBSOBS implements DiagramInterface {
             if (clicked !== null) {
                 let thisemp = clicked.data;
                 self.diagram.startTransaction("add employee");
-                let newemp = {key: getNextKey(), name: "(название)", title: "", parent: thisemp.key, hash: self.hash()};
+                let newemp = self.getNode(getNextKey(), thisemp.key);
                 self.diagram.model.addNodeData(newemp);
                 self.diagram.commitTransaction("add employee");
             }
@@ -160,7 +156,7 @@ export default class WBSOBS implements DiagramInterface {
 
         // define the Node template
         this.diagram.nodeTemplate =
-            $(go.Node, "Auto",
+            this.maker(go.Node, "Auto",
                 {doubleClick: nodeDoubleClick},
                 { // handle dragging a Node onto a Node to (maybe) change the reporting relationship
                     mouseDragEnter: function (e, node, prev) {
@@ -200,22 +196,22 @@ export default class WBSOBS implements DiagramInterface {
                     return sel ? "Foreground" : "";
                 }).ofObject(),
                 // define the node's outer shape
-                $(go.Shape, "Rectangle",
+                this.maker(go.Shape, "Rectangle",
                     {
                         name: "SHAPE", fill: "white", stroke: null,
                         // set the port properties:
                         portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer"
                     }),
-                $(go.Panel, "Horizontal",
+                this.maker(go.Panel, "Horizontal",
                     // define the panel where the text will appear
-                    $(go.Panel, "Table",
+                    this.maker(go.Panel, "Table",
                         {
                             maxSize: new go.Size(150, 999),
                             margin: new go.Margin(6, 10, 0, 3),
                             defaultAlignment: go.Spot.Left
                         },
-                        $(go.RowColumnDefinition, {column: 2, width: 4}),
-                        $(go.TextBlock, textStyle(),  // the name
+                        this.maker(go.RowColumnDefinition, {column: 2, width: 4}),
+                        this.maker(go.TextBlock, textStyle(),  // the name
                             {
                                 row: 0, column: 0, columnSpan: 5,
                                 font: "12pt Segoe UI,sans-serif",
@@ -223,7 +219,7 @@ export default class WBSOBS implements DiagramInterface {
                                 minSize: new go.Size(10, 16)
                             },
                             new go.Binding("text", "name").makeTwoWay()),
-                        $(go.TextBlock, textStyle(),
+                        this.maker(go.TextBlock, textStyle(),
                             {row: 2, column: 0},
                             new go.Binding("text", "key", function (v) {
                                 return "ID: " + v;
@@ -268,13 +264,13 @@ export default class WBSOBS implements DiagramInterface {
                                     let node = obj.part.data;
                                     let choice = obj.part.data.choice;
 
-                                    obj.part.data.draggable = !!obj.part.data.choice;
-
-                                    if (choice && !this.palette.model.containsNodeData(node)) {
-                                        this.palette.model.addNodeData(node);
+                                    // obj.part.data.draggable = !!obj.part.data.choice;
+                                    if (choice && !this.itemContains(node)) {
+                                        this.addItem(node);
                                     } else {
-                                        if (this.palette.model.containsNodeData(node)) {
-                                            this.palette.model.removeNodeData(node);
+                                        let _node = this.itemContains(node);
+                                        if (_node) {
+                                            this.removeItem(_node);
                                         }
                                     }
                                 }
@@ -287,9 +283,9 @@ export default class WBSOBS implements DiagramInterface {
         // the context menu allows users to make a position vacant,
         // remove a role and reassign the subtree, or remove a department
         this.diagram.nodeTemplate.contextMenu =
-            $(go.Adornment, "Vertical",
-                $("ContextMenuButton",
-                    $(go.TextBlock, "Удалить ветку"),
+            this.maker(go.Adornment, "Vertical",
+                this.maker("ContextMenuButton",
+                    this.maker(go.TextBlock, "Удалить ветку"),
                     {
                         click: (e, obj) => {
                             // reparent the subtree to this node's boss, then remove the node
@@ -309,8 +305,8 @@ export default class WBSOBS implements DiagramInterface {
                         }
                     }
                 ),
-                $("ContextMenuButton",
-                    $(go.TextBlock, "Удалить дерево"),
+                this.maker("ContextMenuButton",
+                    this.maker(go.TextBlock, "Удалить дерево"),
                     {
                         click: (e, obj) => {
                             // remove the whole subtree, including the node itself
@@ -327,56 +323,43 @@ export default class WBSOBS implements DiagramInterface {
 
         // define the Link template
         this.diagram.linkTemplate =
-            $(go.Link, go.Link.Orthogonal,
+            this.maker(go.Link, go.Link.Orthogonal,
                 {corner: 5, relinkableFrom: true, relinkableTo: true},
-                $(go.Shape, {strokeWidth: 4, stroke: "#00a4a4"}));  // the link shape
+                this.maker(go.Shape, {strokeWidth: 4, stroke: "#00a4a4"}));  // the link shape
 
-        this.diagram.model = go.Model.fromJson(this.model);
-
-        this.palette = this.maker(
-            go.Palette,
-            "palette",
-            {
-                nodeTemplate: $(
-                    go.Node,
-                    "Horizontal",
-                    $(
-                        go.TextBlock,
-                        {
-                            font: "12pt  Segoe UI,sans-serif",
-                            stroke: "black"
-                        },
-                        new go.Binding('text', 'name')
-                    )
-                ),
-                model: new go.GraphLinksModel([])
-            }
-        );
-
+        window['PIXELRATIO'] = this.diagram.computePixelRatio();
     }
 
-    hash() {
-        let s4 = () => {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
+    /**
+     *
+     * @param nextKey
+     * @param parent
+     * @return {{key: number, name: string, title: string, hash: string}}
+     */
+    getNode (nextKey: number, parent?: number) {
+        let node = {
+            key: nextKey,
+            name: "(название)",
+            title: "",
+            hash: this.hash()
         };
 
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
+        if (parent) {
+            node['parent'] = parent;
+        }
+
+        return node;
     }
 
-    getModel() {
-        return {
-            diagram: this.diagram.model.toJson(),
-            palette: this.palette.model.toJson()
-        };
-    }
+    /**
+     *
+     * @param schema
+     */
+    initDiagram(schema: Schema) {
+        this.diagram.model = go.Model.fromJson(schema.diagram);
+        this.initItems(schema.palette);
 
-    initDiagram() {
-        let self = this;
-        this.diagram.model = go.Model.fromJson(this.model);
-        this.div.nativeElement.addEventListener('dragover', function (event) {
+        this.div.addEventListener('dragover', (event) => {
             let can = event.target;
             let pixelratio = window['PIXELRATIO'];
 
@@ -390,13 +373,13 @@ export default class WBSOBS implements DiagramInterface {
             if (bbh === 0) bbh = 0.001;
             let mx = event.clientX - bbox.left * ((can.width / pixelratio) / bbw);
             let my = event.clientY - bbox.top * ((can.height / pixelratio) / bbh);
-            let point = self.diagram.transformViewToDoc(new go.Point(mx, my));
-            let curnode = self.diagram.findPartAt(point, true);
+            let point = this.diagram.transformViewToDoc(new go.Point(mx, my));
+            let curnode = this.diagram.findPartAt(point, true);
             if (curnode instanceof go.Node) {
                 console.log('focus on go.Node', curnode.data)
-                self.highlight(curnode, self.diagram);
+                this.highlight(curnode, this.diagram);
             } else {
-                self.highlight(null, self.diagram);
+                this.highlight(null, this.diagram);
             }
 
             if (event.target.className === "dropzone") {
@@ -410,19 +393,5 @@ export default class WBSOBS implements DiagramInterface {
         }, false);
 
     }
-
-    highlight(node, diagram) {  // may be null
-        let oldskips = diagram.skipsUndoManager;
-        diagram.skipsUndoManager = true;
-        diagram.startTransaction("highlight");
-        if (node !== null) {
-            diagram.highlight(node);
-        } else {
-            diagram.clearHighlighteds();
-        }
-        diagram.commitTransaction("highlight");
-        diagram.skipsUndoManager = oldskips;
-    }
-
 
 }

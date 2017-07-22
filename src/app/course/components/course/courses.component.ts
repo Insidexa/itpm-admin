@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 
 import 'rxjs/operator/map';
 import {CourseService} from "./course.service";
+import {Course} from "./course";
 
 @Component({
     selector: `courses`,
@@ -10,7 +11,7 @@ import {CourseService} from "./course.service";
 export class CoursesComponent implements OnInit {
     public courses: Array<Object> = [];
 
-    public course: Object = {name: null, description: null};
+    public course: Course = new Course();
 
     constructor(private CourseService: CourseService) {}
 
@@ -23,7 +24,7 @@ export class CoursesComponent implements OnInit {
     addCourse() {
         this.CourseService.store(this.course).subscribe(response => {
             this.courses.push(response.data);
-            this.course = {name: null, description: null};
+            this.course = new Course();
         })
     }
 

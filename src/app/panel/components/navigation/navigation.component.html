@@ -5,24 +5,12 @@
     <div class="menu-list">
 
         <ul id="menu-content" class="menu-content collapse out">
-            <li>
-                <a [routerLink]="['/panel']">
-                    <i class="fa fa-dashboard fa-lg"></i> Dashboard
-                </a>
+            <li [routerLinkActive]="['active']">
+                <a [routerLink]="['/']">Dashboard</a>
             </li>
-
-            <li  data-toggle="collapse" data-target="#products" class="collapsed active">
-                <a [routerLink]="['/panel/schema']"><i class="fa fa-gift fa-lg"></i> Add  schema </a>
+            <li [routerLinkActive]="['active']">
+                <a [routerLink]="['/panel/courses']">Курсы</a>
             </li>
-
-            <li data-toggle="collapse" data-target="#service" class="collapsed">
-                <a [routerLink]="['/panel/courses']"><i class="fa fa-globe fa-lg"></i> Курсы </a>
-            </li>
-
-            <li data-toggle="collapse" data-target="#new" class="collapsed">
-                <a href="#"><i class="fa fa-car fa-lg"></i> New </a>
-            </li>
-
         </ul>
     </div>
 </div>
