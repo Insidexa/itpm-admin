@@ -18,6 +18,7 @@ import {HttpServiceFactory} from "./http-service.factory";
 const appRoutes: Routes = [
   {
     // root route
+    pathMatch: 'full',
     path: '', component: HomeComponent,
   },
   {
