@@ -2,6 +2,7 @@ import {Http, XHRBackend, RequestOptions, Request, RequestOptionsArgs, Response,
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 import {JWTService} from "./helpers/services/jwt";
+import {environment} from "../environments/environment";
 
 @Injectable()
 export class HttpService extends Http {
@@ -17,7 +18,7 @@ export class HttpService extends Http {
      */
     constructor(backend: XHRBackend, options: RequestOptions, private jwt: JWTService) {
         super(backend, options);
-        this.apiUrl = 'http://localhost:8000/';
+        this.apiUrl = environment.apiHost;
         this.apiPrefix = 'api/';
         this.adminPrefix = 'admin/';
     }
