@@ -21,7 +21,7 @@ import {SchemaService} from "./components/schema/schema.service";
 
 const routes: Routes = [
     {
-        path: 'cources',
+        path: '',
         component: CoursesComponent,
     },
     {
