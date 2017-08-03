@@ -49,7 +49,7 @@ export class SchemaComponent implements OnInit, OnDestroy {
                 ? unit.schema
                 : new Schema();
 
-            this.type = this.schema.type;
+            this.type = this.schema.type ? this.schema.type : 'WBSOBS';
 
             this.initDiagram();
 

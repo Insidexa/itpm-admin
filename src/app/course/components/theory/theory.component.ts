@@ -21,6 +21,7 @@ export class TheoryComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.subscription = this.UnitService.unit$.subscribe((unit: Unit) => {
             this.theory = unit.theory ? unit.theory : new Theory();
+            this.theory.unit_id = unit.id;
         });
 
         this.UnitService.callEvent('theory');
