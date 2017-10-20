@@ -7,7 +7,7 @@ export default class WBSOBS extends Diagram {
     model = {
         "class": "go.TreeModel",
         "nodeDataArray": [
-            {"key": 1, "name": "some name", "title": "title", 'hash': this.hash()},
+            {"key": 1, "name": "some name", "title": "title", },
             /*{"key": 2, "name": "Luke Warm", "title": "VP Marketing/Sales", "parent": 1, 'hash': this.hash()},
             {"key": 3, "name": "Meg Meehan Hoffa", "title": "Sales", "parent": 2},
             {"key": 4, "name": "Peggy Flaming", "title": "VP Engineering", "parent": 1},
@@ -341,7 +341,7 @@ export default class WBSOBS extends Diagram {
             key: nextKey,
             name: "(название)",
             title: "",
-            hash: this.hash()
+            //hash: this.hash()
         };
 
         if (parent) {

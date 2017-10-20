@@ -87,7 +87,7 @@ export default class Diagram implements I.DiagramInterface {
      * @return {undefined|Object}
      */
     itemContains (node: Object): Object|undefined {
-        return this.items.find(_node => _node['hash'] === node['hash']);
+        return this.items.find(_node => _node['key'] === node['key']);
     }
 
     /**
