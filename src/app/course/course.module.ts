@@ -18,6 +18,7 @@ import {TheoryService} from "./components/theory/theory.service";
 import {TestService} from "./components/test/test.service";
 import {SchemaComponent} from "./components/schema/schema.component";
 import {SchemaService} from "./components/schema/schema.service";
+import {SliderComponent} from "./components/test/slider/slider.component";
 
 const routes: Routes = [
     {
@@ -93,7 +94,8 @@ const routes: Routes = [
         UnitComponent,
         TheoryComponent,
         TestComponent,
-        SchemaComponent
+        SchemaComponent,
+        SliderComponent
     ]
 })
 export class CourseModule {}

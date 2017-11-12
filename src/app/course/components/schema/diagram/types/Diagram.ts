@@ -53,7 +53,7 @@ export default class Diagram implements I.DiagramInterface {
      *
      * @param schema
      */
-    initDiagram(schema: Schema) {}
+    initDiagram(schema: any) {}
 
     /**
      *
@@ -133,6 +133,10 @@ export default class Diagram implements I.DiagramInterface {
     removeItem (node) {
         this.items = this.items.filter(_node => node !== _node);
         this.itemsSource.next(this.items);
+    }
+
+    getDiagram () {
+        return this.diagram;
     }
 
 }

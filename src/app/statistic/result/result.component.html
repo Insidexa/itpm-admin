@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-md-12">
+
+    <h4 *ngIf="result; else loader">Отчет о прохождении юнита {{result.unit.name}}</h4>
+
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Практика">
+        <ng-template ngbTabContent>
+          <button (click)="makeImg()" class="btn btn-primary">make img</button>
+          <div #goJSDiagram style="width:100%; height:450px; background-color: #DAE4E4;"></div>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab *ngIf="result; else loader" title="Тест">
+        <ng-template ngbTabContent>
+
+          <!--<div class="card text-white bg-success mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+              <h4 class="card-title">Success card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>
+          <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+              <h4 class="card-title">Danger card title</h4>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+          </div>-->
+
+          <div *ngFor="let qa of result.test; let questionIndex = index"
+               style="margin-top: 15px"
+               class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <span>Вопрос ({{questionIndex + 1}}) - {{qa.question.name}}</span>
+                <span
+                   class="badge badge-pill"
+                   [ngClass]="{
+                    'badge-danger': !isCorrectAnswerQuestion(qa),
+                    'badge-success': isCorrectAnswerQuestion(qa)
+                   }">
+                  {{isCorrectAnswerQuestion(qa) ? 'Правильно' : 'Неправильно'}}
+                </span>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Ответ - <span>{{qa.answer.name}}</span></h4>
+                <p *ngIf="!isCorrectAnswerQuestion(qa)" class="card-text">Правильный ответ - {{qa.correct_answer.name}}</p>
+              </div>
+            </div>
+
+          </div>
+
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+
+  <ng-template #loader>Loading...</ng-template>
+
+</div>

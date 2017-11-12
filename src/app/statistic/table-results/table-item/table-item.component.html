@@ -1,0 +1,18 @@
+<td>{{item.id}}</td>
+<td>
+    <button class="btn btn-sm btn-primary" type="button" (click)="byUser()">
+        {{item.user.name}}
+    </button>
+</td>
+<td>
+    <button class="btn btn-sm btn-primary" type="button" (click)="byUnit()">
+        {{item.unit.name}}
+    </button>
+</td>
+<td>{{item.current_tab | tabPipe}}</td>
+<td>{{item.status | statusPipe}}</td>
+<td>{{item.updated_at}}</td>
+<td>
+    <a [class.disabled]="item.status !== 2"
+       [routerLink]="['/panel/statistics/' + item.id]">{{item.status === 2 ? 'Результат' : 'Незакончен'}}</a>
+</td>

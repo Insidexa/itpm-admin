@@ -27,9 +27,9 @@ export class UnitService {
     schema$ = this.schemaSource.asObservable();
     event$ = this.eventSource.asObservable();
 
-    constructor(private http: HttpService) {
+    constructor(private HttpService: HttpService) {
         this.prefix = 'units/';
-        this.api = `${this.http.adminPrefix}${this.prefix}`;
+        this.api = `${this.HttpService.adminPrefix}${this.prefix}`;
     }
 
     pushUnit(unit: Unit) {
@@ -53,13 +53,13 @@ export class UnitService {
     }
 
     unit(id: number): Observable<Unit> {
-        return this.http.get(`${this.api}${id}`).map((data: Response) => {
+        return this.HttpService.get(`${this.api}${id}`).map((data: Response) => {
             return new Unit(data.json().data);
         });
     }
 
     all(lessonId: number): Observable<Array<Unit>> {
-        return this.http.get(`${this.api}lesson/${lessonId}`)
+        return this.HttpService.get(`${this.api}lesson/${lessonId}`)
             .map((data: Response) => {
 
                 let units: Array<Unit> = [];
@@ -73,19 +73,19 @@ export class UnitService {
     }
 
     store(data: Unit): Observable<Unit> {
-        return this.http.post(`${this.api}`, data).map((data: Response) => {
+        return this.HttpService.post(`${this.api}`, data).map((data: Response) => {
             return new Unit(data.json().data);
         });
     }
 
     update(data: Unit) {
-        return this.http.patch(`${this.api}${data.id}`, data).map((data: Response) => {
+        return this.HttpService.patch(`${this.api}${data.id}`, data).map((data: Response) => {
             return data.json();
         });
     }
 
     delete(id: number) {
-        return this.http.delete(`${this.api}${id}`).map((data: Response) => {
+        return this.HttpService.delete(`${this.api}${id}`).map((data: Response) => {
             return data.json();
         });
     }

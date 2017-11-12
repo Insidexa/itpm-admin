@@ -37,6 +37,14 @@ export class TestComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
+    isSelected(questionIndex: number, answerIndex: number) {
+        if (this.test.questions[questionIndex].answers[answerIndex].hasOwnProperty('id')) {
+            return this.test.questions[questionIndex].answer_id === this.test.questions[questionIndex].answers[answerIndex].id;
+        } else {
+            return this.test.questions[questionIndex].answer_id === answerIndex;
+        }
+    }
+
     save() {
         this.TestService.store(this.test).subscribe((test: Test) => {
             this.UnitService.pushTest(test);
@@ -44,7 +52,11 @@ export class TestComponent implements OnInit, OnDestroy {
         });
     }
 
-    setRightAnswer(question: Question, answer: Answer) {
-        question.hash = answer.hash;
+    setRightAnswer(questionIndex: number, answerIndex: number) {
+        if (this.test.questions[questionIndex].answers[answerIndex].hasOwnProperty('id')) {
+            this.test.questions[questionIndex].answer_id = this.test.questions[questionIndex].answers[answerIndex].id;
+        } else {
+            this.test.questions[questionIndex].answer_id = answerIndex;
+        }
     }
 }

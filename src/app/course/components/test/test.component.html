@@ -2,9 +2,9 @@
     <form (ngSubmit)="save()">
 
         <ul *ngIf="test">
-            <li *ngFor="let question of test.questions; let questionIndex = index" class="row">
+            <li *ngFor="let question of test.questions; let questionIndex = index" id="question_{{questionIndex}}" class="row">
 
-                <div class="col-md-12">
+                <div class="col-md-8">
 
                     <div class="form-group">
                         <h6>Вопрос({{questionIndex + 1}}) - {{question.name}}</h6>
@@ -17,8 +17,8 @@
                         <li *ngFor="let answer of question.answers; let answerIndex = index">
                             <p>Ответ({{answerIndex + 1}}) - {{answer.name}}</p>
                             <div class="row">
-                                <div class="col-md-10" [ngClass]="{'has-success': question.hash === answer.hash}">
-                                    <input [ngClass]="{'form-control-success': question.hash === answer.hash}"
+                                <div class="col-md-10" [ngClass]="{'has-success': isSelected(questionIndex, answerIndex)}">
+                                    <input [ngClass]="{'form-control-success': isSelected(questionIndex, answerIndex)}"
                                            class="form-control"
                                            type="text"
                                            name="question-{{questionIndex}}-answer-{{answerIndex}}"
@@ -26,8 +26,8 @@
                                 </div>
                                 <div class="col-md-2">
                                     <input type="radio"
-                                           [checked]="question.hash === answer.hash"
-                                           (click)="setRightAnswer(question, answer)">
+                                           [checked]="question.answer_id === answer.id"
+                                           (click)="setRightAnswer(questionIndex, answerIndex)">
                                 </div>
                             </div>
                         </li>
@@ -43,5 +43,7 @@
         </div>
 
     </form>
+
+    <test-slider *ngIf="test" [questions]="test.questions"></test-slider>
 
 </div>

@@ -19,8 +19,9 @@ export class CourseComponent implements OnInit {
     constructor(
         private CourseService: CourseService,
         private LessonService: LessonService,
-        private route: ActivatedRoute
-    ) {}
+        private route: ActivatedRoute,
+    ) {
+    }
 
     ngOnInit() {
         this.route.params.subscribe(params => {

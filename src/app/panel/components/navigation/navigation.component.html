@@ -1,16 +1,13 @@
-<div class="nav-side-menu">
-    <div class="brand">Dashboard</div>
-    <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+<nav class="col-md-12 d-none d-sm-block bg-light">
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/panel/courses']">Курсы</a>
+        </li>
+    </ul>
 
-    <div class="menu-list">
-
-        <ul id="menu-content" class="menu-content collapse out">
-            <li [routerLinkActive]="['active']">
-                <a [routerLink]="['/']">Dashboard</a>
-            </li>
-            <li [routerLinkActive]="['active']">
-                <a [routerLink]="['/panel/courses']">Курсы</a>
-            </li>
-        </ul>
-    </div>
-</div>
+    <ul class="nav nav-pills flex-column">
+        <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="'/panel/statistics'">Statistics</a>
+        </li>
+    </ul>
+</nav>

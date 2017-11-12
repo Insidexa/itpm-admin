@@ -6,15 +6,16 @@ import {Observable} from "rxjs";
 import {HttpService} from "../../../http.service";
 import {Theory} from "./theory";
 import {JWTService} from "../../../helpers/services/jwt";
+import {environment} from "../../../../environments/environment";
 
 @Injectable()
 export class TheoryService {
     private prefix: string;
     private api: string;
 
-    constructor(private http: HttpService, private originalHttp: Http, private jwt: JWTService) {
+    constructor(private HttpService: HttpService, private originalHttp: Http, private jwt: JWTService) {
         this.prefix = 'theory/';
-        this.api = `${this.http.adminPrefix}${this.prefix}`;
+        this.api = `${this.HttpService.adminPrefix}${this.prefix}`;
     }
 
     async file(file: File, theory_id: number): Promise<Response> {
@@ -27,11 +28,13 @@ export class TheoryService {
         fd.append('file', file, file.name);
         fd.append('theory_id', theory_id.toString());
 
-        return this.originalHttp.post(`http://localhost:8000/api/files/`, fd, new RequestOptions({headers: headers})).toPromise();
+        const url = `${environment.apiHost}${this.HttpService.apiPrefix}${this.api}attachment`;
+
+        return this.originalHttp.post(url, fd, new RequestOptions({headers: headers})).toPromise();
     }
 
     store(_theory: Theory): Observable<Promise<Theory>> {
-        return this.http.post(`${this.api}`, _theory).map(async (data: Response) => {
+        return this.HttpService.post(`${this.api}`, _theory).map(async (data: Response) => {
 
             let theory = new Theory(data.json());
 

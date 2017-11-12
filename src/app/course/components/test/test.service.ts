@@ -5,6 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {Response} from "@angular/http";
 import {Question} from "./question";
 import {Answer} from "./answer";
+
 @Injectable()
 export class TestService {
     private prefix: string;
@@ -30,7 +31,6 @@ export class TestService {
 
     initializeTest (unitId: number): Test {
         let test = new Test();
-        test.hash = this.guid();
         test.unit_id = unitId;
 
         for (let i = 0; i < this.maxQuestions; ++i) {
@@ -39,12 +39,11 @@ export class TestService {
 
             for (let k = 0; k < this.maxAnswers; ++k) {
                 let answer = new Answer();
-                answer.hash = this.guid();
                 answer.name = `answer ${k + 1}`;
                 question.answers.push(answer)
             }
 
-            question.hash = question.answers[Math.floor(Math.random()*question.answers.length)].hash;
+            question.answer_id = null;
 
             test.questions.push(question);
         }
@@ -63,7 +62,7 @@ export class TestService {
              question.answers = [];
 
              _question.answers.forEach((_answer: Answer) => {
-                 let answer = new Answer(_answer);
+                 const answer = new Answer(_answer);
 
                  question.answers.push(answer);
              });

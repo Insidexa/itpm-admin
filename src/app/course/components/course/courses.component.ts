@@ -13,7 +13,8 @@ export class CoursesComponent implements OnInit {
 
     public course: Course = new Course();
 
-    constructor(private CourseService: CourseService) {}
+    constructor(private CourseService: CourseService) {
+    }
 
     ngOnInit() {
         this.CourseService.all().subscribe(response => {

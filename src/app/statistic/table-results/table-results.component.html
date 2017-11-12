@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-3">
+        <input [(ngModel)]="search" (ngModelChange)="onSearchChange($event)" type="text" class="form-control" placeholder="Имя юзера или тема">
+      </div>
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownTab" ngbDropdownToggle>По вкладке</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownTab">
+            <button (click)="filterByTab(null)" class="dropdown-item">Все</button>
+            <hr>
+            <button *ngFor="let tab of tabs" (click)="filterByTab(tab.id)" class="dropdown-item">{{tab.text}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownStatus" ngbDropdownToggle>По вкладке</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownStatus">
+            <button (click)="filterByStatus(null)" class="dropdown-item">Все</button>
+            <hr>
+            <button *ngFor="let status of statuses" (click)="filterByStatus(status.id)" class="dropdown-item">{{status.text}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-default" (click)="clearFilters()">Очистить фильтры</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div *ngIf="dataExaminations" class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Юзер</th>
+          <th>Имя юнита</th>
+          <th>Вкладка</th>
+          <th>Статус</th>
+          <th>Дата</th>
+          <th>Просмотреть</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of dataExaminations.data"
+            table-item
+            [item]="item"
+            (onClickUnit)="filterByUnit($event)"
+            (onClickUser)="filterByUser($event)"
+        >
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

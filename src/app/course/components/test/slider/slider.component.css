@@ -1,0 +1,9 @@
+.test-slider {
+    position: fixed;
+    right: 10px;
+    top: 100px;
+    width: 200px;
+    height: 500px;
+    border-radius: 3px;
+    border-color: #1b6d85;
+}

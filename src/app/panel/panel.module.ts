@@ -13,6 +13,10 @@ const routes: Routes = [
       {
         path: 'courses',
         loadChildren: './../course/course.module#CourseModule',
+      },
+      {
+        path: 'statistics',
+        loadChildren: './../statistic/statistic.module#StatisticModule'
       }
     ]
   }
@@ -24,12 +28,11 @@ const routes: Routes = [
       RouterModule.forChild(routes)
   ],
   providers: [
-
   ],
   declarations: [
     DashboardComponent,
     NavigationComponent,
-    SidebarComponent
+    SidebarComponent,
   ]
 })
 export class PanelModule {}

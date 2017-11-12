@@ -1,7 +1,6 @@
 export class Answer {
     id: number;
     name: string = '';
-    hash: string;
     question_id: number;
 
     constructor(values: Object = {}) {
