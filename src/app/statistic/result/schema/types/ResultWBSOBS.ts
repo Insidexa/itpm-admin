@@ -77,23 +77,16 @@ export class ResultWBSOBS extends Diagram {
                     let shape = v.node.findObject("SHAPE");
                     if (shape) {
 
+                        shape.fill = this.maker(go.Brush, "Linear", {
+                            0: color,
+                            1: go.Brush.lightenBy(color, 0.05),
+                            start: go.Spot.Left,
+                            end: go.Spot.Right
+                        });
+
                         if (shape.part.data.dropped) {
                             shape.stroke = 'orange';
                             shape.strokeWidth = 4;
-
-                            shape.fill = this.maker(go.Brush, "Linear", {
-                                0: color,
-                                1: go.Brush.lightenBy(color, 0.05),
-                                start: go.Spot.Left,
-                                end: go.Spot.Right
-                            });
-                        } else {
-                            shape.fill = this.maker(go.Brush, "Linear", {
-                                0: color,
-                                1: go.Brush.lightenBy(color, 0.05),
-                                start: go.Spot.Left,
-                                end: go.Spot.Right
-                            });
                         }
                     }
                 }

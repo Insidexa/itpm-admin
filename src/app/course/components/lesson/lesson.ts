@@ -3,7 +3,7 @@ export class Lesson {
     id: number;
     name: string = '';
     description: string = '';
-    cource_id: number;
+    course_id: number;
     units: Array<Unit> = [];
 
     constructor(values: Object = {}) {

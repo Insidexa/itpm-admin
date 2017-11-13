@@ -26,7 +26,7 @@ export class EditLessonComponent implements OnInit {
 
     update() {
         this.LessonService.update(this.lesson).subscribe(() => {
-            this.router.navigate(['/panel/courses/course', this.lesson.cource_id]);
+            this.router.navigateByUrl(`/panel/courses/course/${this.lesson.course_id}`);
         })
     }
 }

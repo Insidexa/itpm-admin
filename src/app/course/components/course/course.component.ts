@@ -29,7 +29,7 @@ export class CourseComponent implements OnInit {
 
             this.CourseService.course(courseId).subscribe(course => {
                 this.course = course;
-                this.lesson.cource_id = this.course.id;
+                this.lesson.course_id = this.course.id;
             });
             this.LessonService.all(courseId).subscribe(lessons => {
                 this.lessons = lessons;

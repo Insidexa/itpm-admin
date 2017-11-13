@@ -31,10 +31,18 @@ export class ResultComponent implements OnInit {
 
   public makeImg () {
     const img = this.diagram.getDiagram().makeImage({
-      scale: 0.7
+      scale: 0.8
     });
 
-    let windowImage = window.open('', 'PRINT', 'height=600,width=600');
+    const width = window.innerWidth
+        || document.documentElement.clientWidth
+        || document.body.clientWidth;
+
+    const height = window.innerHeight
+        || document.documentElement.clientHeight
+        || document.body.clientHeight;
+
+    let windowImage = window.open('', 'PRINT', `height=${height},width=${width}`);
 
     windowImage.document.write('<html><head><title></title>');
     windowImage.document.write('</head><body onload="window.print()">');
