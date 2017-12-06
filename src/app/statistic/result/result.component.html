@@ -6,28 +6,19 @@
     <ngb-tabset [destroyOnHide]="false">
       <ngb-tab title="Практика">
         <ng-template ngbTabContent>
-          <button (click)="makeImg()" class="btn btn-primary">make img</button>
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="dropdownTab" ngbDropdownToggle>Экспорт</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownTab">
+              <button (click)="makeImg()" class="dropdown-item">Печать изображения</button>
+              <button (click)="makePdf()" class="dropdown-item">PDF</button>
+            </div>
+          </div>
+
           <div #goJSDiagram style="width:100%; height:450px; background-color: #DAE4E4;"></div>
         </ng-template>
       </ngb-tab>
       <ngb-tab *ngIf="result; else loader" title="Тест">
         <ng-template ngbTabContent>
-
-          <!--<div class="card text-white bg-success mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-              <h4 class="card-title">Success card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>
-          <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body">
-              <h4 class="card-title">Danger card title</h4>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-          </div>-->
-
           <div *ngFor="let qa of result.test; let questionIndex = index"
                style="margin-top: 15px"
                class="col-md-12">

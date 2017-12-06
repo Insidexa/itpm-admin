@@ -5,6 +5,8 @@ import {IQuestion, IResult, ISchema} from "./models/result";
 import instances from "./schema/instances";
 import Diagram from "../../course/components/schema/diagram/types/Diagram";
 
+import * as jspdf from 'jspdf/dist/jspdf.min.js';
+
 @Component({
   selector: 'app-result',
   templateUrl: './result.component.html',
@@ -51,8 +53,16 @@ export class ResultComponent implements OnInit {
 
     windowImage.document.close(); // necessary for IE >= 10
     windowImage.focus(); // necessary for IE >= 10*/
+  }
 
-    // windowImage.close();
+  public makePdf () {
+    const img = this.diagram.getDiagram().makeImage({
+      scale: 0.8
+    });
+
+    let pdf = new jspdf();
+    pdf.addImage(img.src, 'JPEG', 1, 1);
+    pdf.save();
   }
 
   public initDiagram (schema: ISchema) {
