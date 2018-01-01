@@ -1,9 +1,12 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+
+import {Subscription} from "rxjs/Subscription";
+
 import {Theory} from "./theory";
 import {TheoryService} from "./theory.service";
-import {UnitService} from "../unit/unit.service";
-import {Unit} from "../unit/unit";
-import {Subscription} from "rxjs/Subscription";
+import {UnitService} from "../unit/unit/unit.service";
+import {Unit} from "../unit/unit/unit";
 
 @Component({
     selector: 'theory',
@@ -13,10 +16,16 @@ export class TheoryComponent implements OnInit, OnDestroy {
 
     theory: Theory = new Theory();
     subscription: Subscription;
+    private theoryGroup: FormGroup;
 
     constructor(private TheoryService: TheoryService,
-                private UnitService: UnitService
-    ) {}
+                private UnitService: UnitService,
+                private FormBuilder: FormBuilder
+    ) {
+        this.theoryGroup = this.FormBuilder.group({
+            'iframe': [null, Validators.required],
+        });
+    }
 
     ngOnInit() {
         this.subscription = this.UnitService.unit$.subscribe((unit: Unit) => {
@@ -36,11 +45,13 @@ export class TheoryComponent implements OnInit, OnDestroy {
     }
 
     save() {
-        this.TheoryService.store(this.theory).subscribe((promise: Promise<Theory>) => {
-            promise.then((theory: Theory) => {
-                this.UnitService.pushTheory(theory);
-                this.theory = theory;
+        if (this.theoryGroup.valid) {
+            this.TheoryService.store(this.theory).subscribe((promise: Promise<Theory>) => {
+                promise.then((theory: Theory) => {
+                    this.UnitService.pushTheory(theory);
+                    this.theory = theory;
+                });
             });
-        })
+        }
     }
 }

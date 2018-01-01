@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-md-12">
+        <h3>Уроки</h3>
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="list-group">
+                    <lesson *ngFor="let lesson of lessons.data" [lesson]="lesson" (onRemove)="removeLesson($event)"></lesson>
+                </div>
+
+            </div>
+            <div class="col-md-5">
+                <h4>Добавить</h4>
+
+                <lesson-form [lesson]="lesson" (onSubmit)="addLesson($event)"></lesson-form>
+
+            </div>
+        </div>
+    </div>
+</div>

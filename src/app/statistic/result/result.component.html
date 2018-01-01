@@ -4,7 +4,7 @@
     <h4 *ngIf="result; else loader">Отчет о прохождении юнита {{result.unit.name}}</h4>
 
     <ngb-tabset [destroyOnHide]="false">
-      <ngb-tab title="Практика">
+      <ngb-tab *ngIf="visibleDiagram" title="Практика">
         <ng-template ngbTabContent>
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary" id="dropdownTab" ngbDropdownToggle>Экспорт</button>

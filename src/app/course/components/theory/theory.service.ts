@@ -38,9 +38,11 @@ export class TheoryService {
 
             let theory = new Theory(data.json());
 
-            let file = await this.file(_theory.file, theory.id);
+            if (_theory.file) {
+                let file = await this.file(_theory.file, theory.id);
 
-            theory.file = file.json();
+                theory.file = file.json();
+            }
 
             return theory;
         });

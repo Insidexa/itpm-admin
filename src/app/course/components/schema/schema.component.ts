@@ -1,14 +1,15 @@
 import {Component, ViewChild, OnInit, OnDestroy} from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
 
 import 'rxjs/operator/map';
+import {Subscription} from "rxjs/Subscription";
+
 import {SchemaService} from "./schema.service";
 import {Schema} from "./schema";
-import instances from './diagram/instances';
-import {ActivatedRoute} from "@angular/router";
-import {UnitService} from "../unit/unit.service";
-import {Unit} from "../unit/unit";
-import {Subscription} from "rxjs/Subscription";
-import Diagram from "./diagram/types/Diagram";
+import {instances, DiagramFactory} from '../../../helpers/diagram/instances';
+import {UnitService} from "../unit/unit/unit.service";
+import {Unit} from "../unit/unit/unit";
+import Diagram from "../../../helpers/diagram/types/Diagram";
 
 @Component({
     selector: `schema`,
@@ -34,7 +35,7 @@ export class SchemaComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private UnitService: UnitService
     ) {
-        this.types = instances;
+        this.types = instances.filter(instance => !instance.result);
         this.schema = new Schema();
     }
 
@@ -85,7 +86,7 @@ export class SchemaComponent implements OnInit, OnDestroy {
 
     initDiagram () {
         let index = instances.findIndex((element, index) => this.type === element.value);
-        this.diagram = new instances[index]['class'](this.div);
+        this.diagram = DiagramFactory(instances[index]['class'], this.div);
         this.itemSub = this.diagram.items$.subscribe((items: Array<Object>) => {
             this.items = items;
         });
@@ -94,6 +95,7 @@ export class SchemaComponent implements OnInit, OnDestroy {
 
     onSelectType() {
         if (this.type) {
+            this.diagram.destroy();
             this.initDiagram();
         }
     }

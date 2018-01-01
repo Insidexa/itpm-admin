@@ -1,14 +1,20 @@
 
-import {Unit} from "../../../course/components/unit/unit";
+import {Unit} from "../../../course/components/unit/unit/unit";
 import {User} from "../../../home/user";
 import {Answer} from "../../../course/components/test/answer";
 import {Question} from "../../../course/components/test/question";
+
+export interface IDiagram {
+    'class': string;
+    nodeDataArray: Array<any>;
+    palette?: Array<any>;
+}
 
 export interface ISchema {
     created_at: string;
     id: number;
     type: string;
-    diagram: Object;
+    diagram: IDiagram;
     examination_info_id: number;
     schema_id: number;
     updated_at: string;

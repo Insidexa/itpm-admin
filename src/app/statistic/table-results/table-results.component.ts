@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TableResultsService} from "./services/table-results.service";
 import {IPagination} from "./models/pagination";
-import {Unit} from "../../course/components/unit/unit";
+import {Unit} from "../../course/components/unit/unit/unit";
 import {User} from "../../home/user";
 import {IStatus, statuses, tabs} from "./table-item/statuses";
 import {Subject} from "rxjs/Subject";

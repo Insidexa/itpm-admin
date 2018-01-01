@@ -1,70 +1,114 @@
 import {NgModule} from "@angular/core";
 import {Routes, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {CourseComponent} from "./components/course/course.component";
-import {LessonComponent} from "./components/lesson/lesson.component";
-import {UnitComponent} from "./components/unit/unit.component";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+
+import {CourseComponent} from "./components/course/course/course.component";
+import {LessonComponent} from "./components/lesson/lesson/lesson.component";
+import {UnitComponent} from "./components/unit/unit/unit.component";
 import {TheoryComponent} from "./components/theory/theory.component";
 import {TestComponent} from "./components/test/test.component";
 import {CoursesComponent} from "./components/course/courses.component";
-import {EditCourseComponent} from "./components/course/edit-course.component";
-import {EditLessonComponent} from "./components/lesson/edit-lesson.component";
-import {EditUnitComponent} from "./components/unit/edit-unit.component";
-import {CourseService} from "./components/course/course.service";
-import {LessonService} from "./components/lesson/lesson.service";
-import {UnitService} from "./components/unit/unit.service";
+import {EditCourseComponent} from "./components/course/course/course-edit/edit-course.component";
+import {EditLessonComponent} from "./components/lesson/lesson-edit/edit-lesson.component";
+import {EditUnitComponent} from "./components/unit/unit-edit/edit-unit.component";
+import {CourseService} from "./components/course/course/course.service";
+import {LessonService} from "./components/lesson/lesson/lesson.service";
+import {UnitService} from "./components/unit/unit/unit.service";
 import {TheoryService} from "./components/theory/theory.service";
 import {TestService} from "./components/test/test.service";
 import {SchemaComponent} from "./components/schema/schema.component";
 import {SchemaService} from "./components/schema/schema.service";
 import {SliderComponent} from "./components/test/slider/slider.component";
+import {CourseFormComponent} from "./components/course/course/course-form/course-form.component";
+import {LessonFormComponent} from "./components/lesson/lesson-form/lesson-form.component";
+import {LessonsComponent} from "./components/lesson/lessons.component";
+import {PaginationService} from "../helpers/services/pagination/pagination.service";
+import {NamedRouteDirective} from "../helpers/named-route/named-route.directive";
+import {UnitsComponent} from "./components/unit/units.component";
+import {UnitFormComponent} from "./components/unit/unit-form/unit-form.component";
+import {UnitPageComponent} from "./components/unit/unit-page/unit-page.component";
 
 const routes: Routes = [
     {
         path: '',
         component: CoursesComponent,
+        data: {
+            routeName: 'courses'
+        }
     },
     {
-        path: 'edit/:id',
-        component: EditCourseComponent
+        path: ':id/edit',
+        component: EditCourseComponent,
+        data: {
+            routeName: 'editCourse'
+        }
     },
     {
-        path: 'course/:id',
-        component: CourseComponent,
+        path: ':id/lessons',
+        component: LessonsComponent,
+        data: {
+            routeName: 'lessons'
+        }
     },
     {
-        path: 'edit/lesson/:id',
-        component: EditLessonComponent
+        path: 'lessons/:id/edit',
+        component: EditLessonComponent,
+        data: {
+            routeName: 'editLesson'
+        }
     },
     {
-        path: 'course/:courseId/lesson/:id',
-        component: LessonComponent
+        path: ':courseId/lessons/:id/units',
+        component: UnitsComponent,
+        data: {
+            routeName: 'units'
+        }
     },
     {
-        path: 'edit/unit/:id',
-        component: EditUnitComponent
+        path: 'units/:id/edit',
+        component: EditUnitComponent,
+        data: {
+            routeName: 'editUnit'
+        }
     },
     {
-        path: 'course/:courseId/lesson/:lessonId/unit/:id',
-        component: UnitComponent,
+        path: ':courseId/lessons/:lessonId/units/:id',
+        component: UnitPageComponent,
+        data: {
+            routeName: 'unitPage'
+        },
         children: [
             {
                 path: '',
                 redirectTo: 'theory',
-                pathMatch: 'full'
+                pathMatch: 'full',
+                data: {
+                    routeName: 'unit'
+                }
             },
             {
                 path: 'theory',
-                component: TheoryComponent
+                component: TheoryComponent,
+                data: {
+                    routeName: 'unitTheory'
+                }
             },
             {
                 path: 'schema',
-                component: SchemaComponent
+                component: SchemaComponent,
+                data: {
+                    routeName: 'unitSchema'
+                }
             },
             {
                 path: 'test',
-                component: TestComponent
+                component: TestComponent,
+                data: {
+                    routeName: 'unitTest'
+                }
             }
         ]
     },
@@ -74,7 +118,9 @@ const routes: Routes = [
     imports: [
         CommonModule,
         FormsModule,
-        RouterModule.forChild(routes)
+        ReactiveFormsModule,
+        RouterModule.forChild(routes),
+        NgbModule.forRoot()
     ],
     providers: [
         CourseService,
@@ -82,20 +128,34 @@ const routes: Routes = [
         UnitService,
         TheoryService,
         TestService,
-        SchemaService
+        SchemaService,
+
+        PaginationService
     ],
     declarations: [
         CoursesComponent,
         CourseComponent,
+        CourseFormComponent,
         EditCourseComponent,
+
         EditLessonComponent,
+        LessonsComponent,
+        LessonFormComponent,
         LessonComponent,
+
+        UnitPageComponent,
+        UnitsComponent,
+        UnitFormComponent,
         EditUnitComponent,
         UnitComponent,
+
         TheoryComponent,
         TestComponent,
         SchemaComponent,
-        SliderComponent
+        SliderComponent,
+
+        NamedRouteDirective
     ]
 })
-export class CourseModule {}
+export class CourseModule {
+}

@@ -13,6 +13,7 @@ import {AuthGuard} from "./helpers/guards/auth";
 import {ToastModule} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpServiceFactory} from "./http-service.factory";
+import {NamedRouteService} from "./helpers/named-route/named-route.service";
 
 const appRoutes: Routes = [
   {
@@ -32,7 +33,7 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
     StorageService,
     JWTService,
     AuthGuard,
+    NamedRouteService,
     {
       provide: HttpService,
       useFactory: HttpServiceFactory,

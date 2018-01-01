@@ -1,11 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ResultService} from "./services/result.service";
 import {IQuestion, IResult, ISchema} from "./models/result";
-import instances from "./schema/instances";
-import Diagram from "../../course/components/schema/diagram/types/Diagram";
-
-import * as jspdf from 'jspdf/dist/jspdf.min.js';
+import Diagram from "../../helpers/diagram/types/Diagram";
+import {AuthService} from "../../helpers/services/auth";
+import {instances, DiagramFactory} from "../../helpers/diagram/instances";
 
 @Component({
   selector: 'app-result',
@@ -14,60 +13,48 @@ import * as jspdf from 'jspdf/dist/jspdf.min.js';
 })
 export class ResultComponent implements OnInit {
 
+  private diagramDiv: ElementRef;
+
+  @ViewChild('goJSDiagram') set goJSDiagram (content: ElementRef) {
+    this.diagramDiv = content;
+    if (this.result) {
+      this.initDiagram(this.result.schema);
+    }
+  }
+
+  public visibleDiagram: boolean = false;
   public result: IResult;
-  @ViewChild('goJSDiagram') div;
   private diagram: Diagram;
 
   constructor(private ActivatedRoute: ActivatedRoute,
-              private ResultService: ResultService) {}
+              private ResultService: ResultService,
+              private AuthService: AuthService) {}
 
   ngOnInit() {
     this.ActivatedRoute.params.subscribe(params => {
       this.ResultService.getResult(+params['id']).subscribe(data => {
         this.result = data;
 
-        this.initDiagram(this.result.schema);
+        if (this.ResultService.schemaIsFilled(this.result.schema)) {
+          this.visibleDiagram = true;
+        }
       });
     });
   }
 
   public makeImg () {
-    const img = this.diagram.getDiagram().makeImage({
-      scale: 0.8
-    });
-
-    const width = window.innerWidth
-        || document.documentElement.clientWidth
-        || document.body.clientWidth;
-
-    const height = window.innerHeight
-        || document.documentElement.clientHeight
-        || document.body.clientHeight;
-
-    let windowImage = window.open('', 'PRINT', `height=${height},width=${width}`);
-
-    windowImage.document.write('<html><head><title></title>');
-    windowImage.document.write('</head><body onload="window.print()">');
-    windowImage.document.write(`<img src="${img.src}" />`);
-    windowImage.document.write('</body></html>');
-
-    windowImage.document.close(); // necessary for IE >= 10
-    windowImage.focus(); // necessary for IE >= 10*/
+    const img = this.ResultService.makeImage(this.diagram);
+    this.ResultService.printImage(img);
   }
 
   public makePdf () {
-    const img = this.diagram.getDiagram().makeImage({
-      scale: 0.8
-    });
-
-    let pdf = new jspdf();
-    pdf.addImage(img.src, 'JPEG', 1, 1);
-    pdf.save();
+    const img = this.ResultService.makeImage(this.diagram);
+    this.ResultService.downloadPDF(img)
   }
 
   public initDiagram (schema: ISchema) {
     let index = instances.findIndex((element, index) => schema.type === element.value);
-    this.diagram = new instances[index]['class'](this.div);
+    this.diagram = DiagramFactory(instances[index]['class'], this.diagramDiv, this.AuthService.getUser().role);
     this.diagram.initDiagram(schema);
   }
 

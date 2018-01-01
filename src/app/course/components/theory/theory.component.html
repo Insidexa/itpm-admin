@@ -1,15 +1,18 @@
-<form (ngSubmit)="save()" enctype="multipart/form-data">
+<form [formGroup]="theoryGroup" (ngSubmit)="save(theoryGroup.value)" enctype="multipart/form-data">
     <div class="form-group">
         <label for="inputName" class="col-md-12 col-form-label">slideshare iframe</label>
         <div class="col-md-12">
             <textarea type="text"
                       name="iframe"
                       [(ngModel)]="theory.iframe"
-                      required
+                      formControlName="iframe"
                       rows="7"
                       class="form-control"
                       id="inputName">
             </textarea>
+        </div>
+        <div class="col-sm-12" *ngIf="theoryGroup.controls['iframe'].errors && theoryGroup.controls['iframe'].touched">
+            <p *ngIf="theoryGroup.controls['iframe'].errors.required">Введите вставку на презентацию</p>
         </div>
     </div>
     <div *ngIf="theory.file && theory.file.path" class="form-group">
@@ -29,7 +32,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-12">
-            <button type="submit" class="btn btn-primary btn-block">Добавить</button>
+            <button [disabled]="theoryGroup.invalid" type="submit" class="btn btn-primary btn-block">Добавить</button>
         </div>
     </div>
 </form>

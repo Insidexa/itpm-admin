@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {statuses, tabs} from "./statuses";
 import {User} from "../../../home/user";
-import {Unit} from "../../../course/components/unit/unit";
+import {Unit} from "../../../course/components/unit/unit/unit";
 
 @Component({
     selector: `[table-item]`,

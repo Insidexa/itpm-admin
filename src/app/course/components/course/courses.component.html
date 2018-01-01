@@ -6,51 +6,25 @@
             <div class="col-md-6">
 
                 <div class="list-group">
-                    <a *ngFor="let course of courses" [routerLink]="['course', course.id]"  class="list-group-item list-group-item-action flex-column align-items-start active">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{course.name}}</h5>
-                            <small>
-                                <button type="button" (click)="removeCourse($event, course.id)" class="btn btn-danger btn-sm">Удалить</button>
-                            </small>
-                        </div>
-                        <p class="mb-1">{{course.description}}</p>
-                        <a [routerLink]="['edit', course.id]" class="btn btn-primary btn-sm">Редактировать</a>
-                    </a>
+                    <course *ngFor="let course of courses.data" [course]="course" (onRemove)="removeCourse($event)"></course>
+                </div>
+
+                <div class="col-md-12">
+                    <ngb-pagination [collectionSize]="courses.total"
+                                    [(page)]="courses.cur_page"
+                                    [pageSize]="PAGE_SIZE"
+                                    [maxSize]="MAX_SIZE"
+                                    [rotate]="true"
+                                    [boundaryLinks]="true"></ngb-pagination>
                 </div>
 
             </div>
+
             <div class="col-md-5">
                 <h4>Добавить</h4>
 
-                <form (ngSubmit)="addCourse()">
-                    <div class="form-group row">
-                        <label for="inputName" class="col-sm-2 col-form-label">Имя</label>
-                        <div class="col-sm-10">
-                            <input type="text"
-                                   name="name"
-                                   [(ngModel)]="course.name"
-                                   required
-                                   class="form-control"
-                                   id="inputName">
-                        </div>
+                <course-form [course]="course" (onSubmit)="addCourse($event)"></course-form>
 
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputDescription" class="col-sm-2 col-form-label">Описание</label>
-                        <div class="col-sm-10">
-                            <input type="text"
-                                   name="description"
-                                   [(ngModel)]="course.description"
-                                   class="form-control"
-                                   id="inputDescription">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="offset-sm-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Добавить</button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
