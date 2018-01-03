@@ -1,8 +1,9 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 
 import {Lesson} from "../lesson/lesson";
 import {LessonService} from "../lesson/lesson.service";
+import {NamedRouteService} from "../../../../helpers/named-route/named-route.service";
 
 @Component({
     selector: `edit-lesson`,
@@ -15,7 +16,7 @@ export class EditLessonComponent implements OnInit {
     constructor(
         private LessonService: LessonService,
         private route: ActivatedRoute,
-        private router: Router
+        private NamedRouteService: NamedRouteService
     ) {}
 
     ngOnInit() {
@@ -28,7 +29,7 @@ export class EditLessonComponent implements OnInit {
 
     update() {
         this.LessonService.update(this.lesson).subscribe(() => {
-            this.router.navigateByUrl(`/panel/courses/course/${this.lesson.course_id}`);
+            this.NamedRouteService.navigateByName('lessons', {id: this.lesson.course_id});
         });
     }
 }

@@ -1,8 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Location} from "@angular/common";
 import {Unit} from "../unit/unit";
 import {UnitService} from "../unit/unit.service";
+import {NamedRouteService} from "../../../../helpers/named-route/named-route.service";
 
 @Component({
     selector: `edit-unit`,
@@ -15,7 +15,7 @@ export class EditUnitComponent implements OnInit {
     constructor(
         private UnitService: UnitService,
         private route: ActivatedRoute,
-        private location: Location
+        private NamedRouteService: NamedRouteService
     ) {}
 
     ngOnInit() {
@@ -28,7 +28,10 @@ export class EditUnitComponent implements OnInit {
 
     updateUnit(unit: Unit) {
         this.UnitService.update(unit).subscribe(() => {
-            this.location.back();
+            this.NamedRouteService.navigateByName('units', {
+                courseId: +this.route.params['value']['id'],
+                id: this.unit.lesson_id
+            });
         });
     }
 }

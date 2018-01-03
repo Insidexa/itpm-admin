@@ -1,7 +1,7 @@
 import {ChildrenOutletContexts, Router, Routes, UrlSerializer} from "@angular/router";
 import {Compiler, Injectable, Injector, NgModuleFactoryLoader, Type} from "@angular/core";
 import { Location } from '@angular/common';
-import {NamedRouteService} from "../named-route/named-route.service";
+import {NamedRouteService} from "../../named-route/named-route.service";
 
 @Injectable()
 export class MyRouter extends Router {

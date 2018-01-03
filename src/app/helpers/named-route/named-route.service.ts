@@ -12,7 +12,8 @@ export class NamedRouteService {
     }
 
     getRoutes(parent: String, config: Route[]) {
-        for (let i = 0; i < config.length; i++) {
+        const length = config.length;
+        for (let i = 0; i < length; i++) {
             let route: Route = config[i];
             let fullPath = `${parent}/${route.path}`;
 
@@ -31,6 +32,12 @@ export class NamedRouteService {
                 this.getRoutes(fullPath, route.children)
             }
         }
+    }
+
+    public navigateByName (routeName: string, routeParams?: any) {
+        const params = routeParams ? routeParams : {};
+        const url = this.getRoute(routeName, params);
+        return this.Router.navigate([url]);
     }
 
     public getRoute(routeName: string, params: any) {

@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
   hmr: true,
-  apiHost: 'http://localhost:8000/'
+  apiHost: 'http://localhost:8080/'
 };
