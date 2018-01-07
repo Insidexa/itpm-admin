@@ -14,8 +14,8 @@ import {Subject} from "rxjs/Subject";
 export class TableResultsComponent implements OnInit {
 
     public dataExaminations: IPagination;
-    private tabs: Array<IStatus>;
-    private statuses: any;
+    public tabs: Array<IStatus>;
+    public statuses: any;
     public search: string;
     public searchSubject: Subject<string> = new Subject<string>();
 

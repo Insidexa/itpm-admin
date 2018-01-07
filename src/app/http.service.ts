@@ -48,7 +48,7 @@ export class HttpService extends Http {
      * of {@link BaseRequestOptions} before performing the request.
      */
     request(url: string|Request, options?: RequestOptionsArgs): Observable<Response> {
-        return super.request(url, options).catch(this.catchAuthError(this));
+        return super.request(url, options);
     }
 
     /**

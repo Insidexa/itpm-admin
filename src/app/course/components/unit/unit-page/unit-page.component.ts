@@ -19,7 +19,7 @@ export class UnitPageComponent implements OnInit, OnDestroy {
     private subTest: Subscription;
     private subTheory: Subscription;
     private subSchema: Subscription;
-    private unit: Unit;
+    public unit: Unit;
 
     constructor(private UnitService: UnitService,
                 private route: ActivatedRoute) {

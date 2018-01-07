@@ -14,9 +14,9 @@ import {Unit} from "../unit/unit/unit";
 })
 export class TheoryComponent implements OnInit, OnDestroy {
 
-    theory: Theory = new Theory();
-    subscription: Subscription;
-    private theoryGroup: FormGroup;
+    public theory: Theory = new Theory();
+    private subscription: Subscription;
+    public theoryGroup: FormGroup;
 
     constructor(private TheoryService: TheoryService,
                 private UnitService: UnitService,

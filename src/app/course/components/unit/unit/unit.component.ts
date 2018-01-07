@@ -12,7 +12,7 @@ export class UnitComponent {
     @Input() unit: Unit;
     @Output() onRemove: EventEmitter<number> = new EventEmitter<number>();
 
-    private courseId: number;
+    public courseId: number;
 
     constructor(private ActivatedRoute: ActivatedRoute) {
         this.ActivatedRoute.params.subscribe(params => {

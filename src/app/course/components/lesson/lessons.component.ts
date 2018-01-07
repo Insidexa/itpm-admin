@@ -18,7 +18,7 @@ export class LessonsComponent implements OnInit {
 
     constructor(private LessonService: LessonService,
                 private ActivatedRoute: ActivatedRoute,
-                private lessons: PaginationService<Lesson>) {}
+                public lessons: PaginationService<Lesson>) {}
 
     ngOnInit() {
         this.ActivatedRoute.params.subscribe(params => {

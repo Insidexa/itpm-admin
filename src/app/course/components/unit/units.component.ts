@@ -33,7 +33,7 @@ export class UnitsComponent implements OnInit {
 
     constructor(private UnitService: UnitService,
                 private ActivatedRoute: ActivatedRoute,
-                private units: PaginationService<Unit>) {}
+                public units: PaginationService<Unit>) {}
 
     public ngOnInit() {
         this.ActivatedRoute.params.subscribe(params => {

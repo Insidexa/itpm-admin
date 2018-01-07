@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "admin",
-    "ejected": false
+    "name": "testp"
   },
   "apps": [
     {
@@ -37,13 +36,16 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json"
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json"
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
     },
     {
-      "project": "e2e/tsconfig.e2e.json"
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
     }
   ],
   "test": {
@@ -51,12 +53,5 @@
       "config": "./karma.conf.js"
     }
   },
-  "defaults": {
-    "styleExt": "css",
-    "component": {
-    },
-    "serve": {
-      "port": 4201
-    }
-  }
+  "defaults": { "styleExt": "css", "component": { }, "serve": { "port": 4201 } }
 }

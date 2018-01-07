@@ -17,7 +17,7 @@ export class CoursesComponent implements OnInit {
     public MAX_SIZE: number = 5;
 
     constructor(private CourseService: CourseService,
-                private courses: PaginationService<Course>) {
+                public courses: PaginationService<Course>) {
     }
 
     ngOnInit() {
