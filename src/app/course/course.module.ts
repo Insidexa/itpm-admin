@@ -25,11 +25,11 @@ import {SliderComponent} from "./components/test/slider/slider.component";
 import {CourseFormComponent} from "./components/course/course/course-form/course-form.component";
 import {LessonFormComponent} from "./components/lesson/lesson-form/lesson-form.component";
 import {LessonsComponent} from "./components/lesson/lessons.component";
-import {PaginationService} from "../helpers/services/pagination/pagination.service";
 import {NamedRouteDirective} from "../helpers/named-route/named-route.directive";
 import {UnitsComponent} from "./components/unit/units.component";
 import {UnitFormComponent} from "./components/unit/unit-form/unit-form.component";
 import {UnitPageComponent} from "./components/unit/unit-page/unit-page.component";
+import {SharedModule} from "../helpers/shared.module";
 
 const routes: Routes = [
     {
@@ -120,7 +120,8 @@ const routes: Routes = [
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forChild(routes),
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        SharedModule
     ],
     providers: [
         CourseService,
@@ -129,8 +130,6 @@ const routes: Routes = [
         TheoryService,
         TestService,
         SchemaService,
-
-        PaginationService
     ],
     declarations: [
         CoursesComponent,

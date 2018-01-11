@@ -3,6 +3,9 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule, RequestOptions, XHRBackend} from '@angular/http';
 import {RouterModule, Routes} from "@angular/router";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -15,6 +18,7 @@ import {ToastModule} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpServiceFactory} from "./http-service.factory";
 import {NamedRouteService} from "./helpers/named-route/named-route.service";
+import {MyHttpInterceptor} from "./http-interceptor";
 
 const appRoutes: Routes = [
   {
@@ -32,10 +36,6 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -44,6 +44,12 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     ToastModule.forRoot(),
     BrowserAnimationsModule,
+    HttpClientModule,
+    NgbModule.forRoot()
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
   ],
   providers: [
     AuthService,
@@ -51,6 +57,11 @@ const appRoutes: Routes = [
     JWTService,
     AuthGuard,
     NamedRouteService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyHttpInterceptor,
+      multi: true
+    },
     {
       provide: HttpService,
       useFactory: HttpServiceFactory,

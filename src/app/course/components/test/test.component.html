@@ -1,15 +1,29 @@
 <div class="col-md-12">
-    <form (ngSubmit)="save()">
+    <form novalidate #testForm="ngForm" (ngSubmit)="save(testForm)">
 
         <ul *ngIf="test">
-            <li *ngFor="let question of test.questions; let questionIndex = index" id="question_{{questionIndex}}" class="row">
+            <li *ngFor="let question of test.questions; let questionIndex = index" class="row">
 
                 <div class="col-md-8">
 
                     <div class="form-group">
                         <h6>Вопрос({{questionIndex + 1}}) - {{question.name}}</h6>
-                        <input type="text" class="form-control" name="question-{{questionIndex}}" [(ngModel)]="question.name">
+                        <input type="text"
+                               class="form-control"
+                               name="question_{{questionIndex}}"
+                               required
+                               [(ngModel)]="question.name">
                     </div>
+
+                    <div *ngIf="testForm.controls['question_' + questionIndex]">
+                        <div *ngIf="testForm.controls['question_' + questionIndex].invalid && (testForm.controls['question_' + questionIndex].dirty || testForm.controls['question_' + questionIndex].touched)"
+                             class="alert alert-danger">
+
+                            <div *ngIf="testForm.controls['question_' + questionIndex].errors.required">Имя вопроса обязательно</div>
+
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="col-md-9 col-md-offset-3">
@@ -21,14 +35,41 @@
                                     <input [ngClass]="{'form-control-success': isSelected(questionIndex, answerIndex)}"
                                            class="form-control"
                                            type="text"
-                                           name="question-{{questionIndex}}-answer-{{answerIndex}}"
+                                           required
+                                           name="question_{{questionIndex}}_answer_name_{{answerIndex}}"
                                            [(ngModel)]="answer.name">
+
+                                    <div *ngIf="testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex]">
+                                        <div *ngIf="testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].invalid && (testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].dirty || testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].touched)"
+                                             class="alert alert-danger">
+
+                                            <div *ngIf="testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].errors.required">Имя ответа обязательно</div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
+
                                 <div class="col-md-2">
                                     <input type="radio"
+                                           name="question_{{questionIndex}}_answer"
+                                           required
                                            [checked]="question.answer_id === answer.id"
                                            (click)="setRightAnswer(questionIndex, answerIndex)">
+
+                                    <div *ngIf="testForm.controls['question_' + question.id + '_answer']">
+                                        <div *ngIf="testForm.controls['question_' + question.id + '_answer'].invalid && (testForm.controls['question_' + question.id + '_answer'].dirty || testForm.controls['question_' + question.id + '_answer'].touched)"
+                                             class="alert alert-danger">
+
+                                            <div *ngIf="testForm.controls['question_' + question.id + '_answer'].errors.required">Выберите один с
+                                                элементов в качестве ответа
+                                            </div>
+
+                                        </div>
+                                    </div>
+
                                 </div>
+
                             </div>
                         </li>
                     </ul>

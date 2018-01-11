@@ -1,46 +1,36 @@
 import {Injectable} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 
-import 'rxjs/operator/map';
-import {Response} from "@angular/http";
 import {Observable} from "rxjs";
-import {HttpService} from "../../../../http.service";
+
 import {Course} from "./course";
-import {IPagination} from "../../../../helpers/services/pagination/pagination";
+import {IPagination} from "../../../../helpers/pagination/model/pagination";
 
 @Injectable()
 export class CourseService {
     private prefix: string;
-    constructor(private http: HttpService) {
+
+    constructor(private HttpClient: HttpClient) {
         this.prefix = 'courses/';
     }
 
-    course(id: number): Observable<Course> {
-        return this.http.get(`${this.http.adminPrefix}${this.prefix}${id}`).map((data: Response) => {
-            return new Course(data.json().data);
-        });
+    public course(id: number): Observable<Course> {
+        return this.HttpClient.get<Course>(`${this.prefix}${id}`);
     }
 
-    all(): Observable<IPagination<Course>> {
-        return this.http.get(`${this.http.adminPrefix}${this.prefix}`).map((data: Response) => {
-            return data.json().data;
-        });
+    public all(): Observable<IPagination<Course>> {
+        return this.HttpClient.get<IPagination<Course>>(`${this.prefix}`);
     }
 
-    store(data) {
-        return this.http.post(`${this.http.adminPrefix}${this.prefix}`, data).map((data: Response) => {
-            return data.json();
-        });
+    public store(data: Course): Observable<Course> {
+        return this.HttpClient.post<Course>(`${this.prefix}`, data);
     }
 
-    update(data) {
-        return this.http.patch(`${this.http.adminPrefix}${this.prefix}${data.id}`, data).map((data: Response) => {
-            return data.json();
-        });
+    public update(data: Course): Observable<Course> {
+        return this.HttpClient.patch<Course>(`${this.prefix}${data.id}`, data);
     }
 
-    delete(id:number) {
-        return this.http.delete(`${this.http.adminPrefix}${this.prefix}${id}`).map((data: Response) => {
-            return data.json();
-        });
+    public delete(id: number) {
+        return this.HttpClient.delete(`${this.prefix}${id}`);
     }
 }

@@ -35,7 +35,6 @@ export class HttpService extends Http {
         if (options.headers == null) {
             options.headers = new Headers();
         }
-        //options.headers.append('Content-Type', 'application/json');
         options.headers.append('Accept', 'application/json');
         options.headers.append('Authorization', `Bearer ${this.jwt.getToken()}`);
         return options;
@@ -86,21 +85,4 @@ export class HttpService extends Http {
         url = `${this.apiUrl}${this.apiPrefix}${url}`;
         return super.patch(url, body, this.getRequestOptionArgs(options));
     };
-
-    /**
-     *
-     * @param self
-     * @return {(res:Response)=>any}
-     */
-    private catchAuthError (self: HttpService) {
-        // we have to pass HttpService's own instance here as `self`
-        return (res: Response) => {
-            console.log(res);
-            if (res.status === 401 || res.status === 403) {
-                // if not authenticated
-                console.log(res);
-            }
-            return Observable.throw(res);
-        };
-    }
 }

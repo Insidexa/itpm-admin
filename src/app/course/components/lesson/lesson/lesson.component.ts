@@ -14,7 +14,7 @@ export class LessonComponent {
 
     public unit: Unit = new Unit();
 
-    removeLesson($event) {
+    public removeLesson($event) {
         $event.preventDefault();
         $event.stopPropagation();
 

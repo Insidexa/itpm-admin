@@ -5,13 +5,14 @@ import 'rxjs/operator/map';
 
 import {LessonService} from "./lesson/lesson.service";
 import {Lesson} from "./lesson/lesson";
-import {PaginationService} from "../../../helpers/services/pagination/pagination.service";
-import {IPagination} from "../../../helpers/services/pagination/pagination";
+import {PaginationService} from "../../../helpers/pagination/service/pagination.service";
+import {IPagination} from "../../../helpers/pagination/model/pagination";
 
 
 @Component({
     selector: `lessons`,
-    templateUrl: `./lessons.component.html`
+    templateUrl: `./lessons.component.html`,
+    providers: [ PaginationService ]
 })
 export class LessonsComponent implements OnInit {
     public lesson: Lesson = new Lesson();

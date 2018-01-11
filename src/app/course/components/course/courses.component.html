@@ -10,12 +10,7 @@
                 </div>
 
                 <div class="col-md-12">
-                    <ngb-pagination [collectionSize]="courses.total"
-                                    [(page)]="courses.cur_page"
-                                    [pageSize]="PAGE_SIZE"
-                                    [maxSize]="MAX_SIZE"
-                                    [rotate]="true"
-                                    [boundaryLinks]="true"></ngb-pagination>
+                    <pagination [paginator]="courses"></pagination>
                 </div>
 
             </div>

@@ -45,11 +45,14 @@ export class TestComponent implements OnInit, OnDestroy {
         }
     }
 
-    save() {
-        this.TestService.store(this.test).subscribe((test: Test) => {
+    save(test) {
+        if (test.valid) {
+            console.log(test);
+        }
+        /*this.TestService.store(this.test).subscribe((test: Test) => {
             this.UnitService.pushTest(test);
             this.test = test;
-        });
+        });*/
     }
 
     setRightAnswer(questionIndex: number, answerIndex: number) {

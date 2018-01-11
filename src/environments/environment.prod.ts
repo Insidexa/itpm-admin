@@ -1,4 +1,6 @@
+
 export const environment = {
   production: true,
-  apiHost: 'http://localhost:8080/'
+  hmr: true,
+  apiHost: 'http://52.39.120.166/'
 };

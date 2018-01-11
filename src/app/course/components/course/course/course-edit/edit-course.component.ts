@@ -20,10 +20,10 @@ export class EditCourseComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.CourseService.course(+params['id']).subscribe(course => {
+            this.CourseService.course(+params['id']).subscribe((course: Course) => {
                 this.course = course;
-            })
-        })
+            });
+        });
     }
 
     update(course: Course) {

@@ -9,6 +9,10 @@
                     <lesson *ngFor="let lesson of lessons.data" [lesson]="lesson" (onRemove)="removeLesson($event)"></lesson>
                 </div>
 
+                <div class="col-md-12">
+                    <pagination [paginator]="lessons"></pagination>
+                </div>
+
             </div>
             <div class="col-md-5">
                 <h4>Добавить</h4>

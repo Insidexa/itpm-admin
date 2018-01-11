@@ -1,50 +1,35 @@
 import {Injectable} from "@angular/core";
-
-import 'rxjs/operator/map';
-import {Response} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {HttpService} from "../../../../http.service";
+
 import {Lesson} from "./lesson";
-import {IPagination} from "../../../../helpers/services/pagination/pagination";
+import {IPagination} from "../../../../helpers/pagination/model/pagination";
 
 @Injectable()
 export class LessonService {
     private prefix: string;
-    private api: string;
 
-    constructor(private http: HttpService) {
+    constructor(private HttpClient: HttpClient) {
         this.prefix = 'lessons/';
-        this.api = `${this.http.adminPrefix}${this.prefix}`;
     }
 
-    lesson(id: number): Observable<Lesson> {
-        return this.http.get(`${this.api}${id}`).map((data: Response) => {
-            return new Lesson(data.json().data);
-        });
+    public lesson(id: number): Observable<Lesson> {
+        return this.HttpClient.get<Lesson>(`${this.prefix}${id}`);
     }
 
-    all(courseId: number): Observable<IPagination<Lesson>> {
-        return this.http.get(`${this.api}?course_id=${courseId}`)
-            .map((data: Response) => {
-                return data.json().data;
-            });
+    public all(courseId: number): Observable<IPagination<Lesson>> {
+        return this.HttpClient.get<IPagination<Lesson>>(`${this.prefix}?course_id=${courseId}`);
     }
 
-    store(data: Lesson): Observable<Lesson> {
-        return this.http.post(`${this.api}`, data).map((data: Response) => {
-            return new Lesson(data.json().data);
-        });
+    public store(data: Lesson): Observable<Lesson> {
+        return this.HttpClient.post<Lesson>(`${this.prefix}`, data);
     }
 
-    update(data: Lesson) {
-        return this.http.patch(`${this.api}${data.id}`, data).map((data: Response) => {
-            return data.json();
-        });
+    public update(data: Lesson): Observable<Lesson> {
+        return this.HttpClient.patch<Lesson>(`${this.prefix}${data.id}`, data);
     }
 
-    delete(id: number) {
-        return this.http.delete(`${this.api}${id}`).map((data: Response) => {
-            return data.json();
-        });
+    public delete(id: number) {
+        return this.HttpClient.delete(`${this.prefix}${id}`);
     }
 }

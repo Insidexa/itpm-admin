@@ -1,50 +1,47 @@
 import {Injectable} from "@angular/core";
 
-import 'rxjs/operator/map';
-import {Headers, Http, RequestOptions, Response} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
+
 import {Observable} from "rxjs";
-import {HttpService} from "../../../http.service";
+import 'rxjs/operator/map';
+
 import {Theory} from "./theory";
-import {JWTService} from "../../../helpers/services/jwt";
-import {environment} from "../../../../environments/environment";
+
 
 @Injectable()
 export class TheoryService {
     private prefix: string;
-    private api: string;
 
-    constructor(private HttpService: HttpService, private originalHttp: Http, private jwt: JWTService) {
+    constructor(private HttpClient: HttpClient) {
         this.prefix = 'theory/';
-        this.api = `${this.HttpService.adminPrefix}${this.prefix}`;
     }
 
-    async file(file: File, theory_id: number): Promise<Response> {
-
-        let headers = new Headers();
-        headers.append('Authorization', `Bearer ${this.jwt.getToken()}`);
-
-        let fd = new FormData();
-
-        fd.append('file', file, file.name);
-        fd.append('theory_id', theory_id.toString());
-
-        const url = `${environment.apiHost}${this.HttpService.apiPrefix}${this.api}attachment`;
-
-        return this.originalHttp.post(url, fd, new RequestOptions({headers: headers})).toPromise();
-    }
-
-    store(_theory: Theory): Observable<Promise<Theory>> {
-        return this.HttpService.post(`${this.api}`, _theory).map(async (data: Response) => {
-
-            let theory = new Theory(data.json());
-
-            if (_theory.file) {
-                let file = await this.file(_theory.file, theory.id);
-
-                theory.file = file.json();
-            }
-
-            return theory;
+    protected readFile (file: File): Observable<any> {
+        const reader = new FileReader();
+        let fileReaderObserver = Observable.create((observer: any) => {
+            reader.onload = (data) => {
+                const extension = file.name.split('.').pop();
+                observer.next({
+                    extension: extension,
+                    content: data.target['result'].split(',')[1]
+                });
+            };
         });
+
+        reader.readAsDataURL(file);
+
+        return fileReaderObserver;
+    }
+
+    public attachFile(file: File, theory_id: number): Observable<any> {
+        return this.readFile(file).switchMap((data) => this.HttpClient.post(`${this.prefix}attachment`, {
+            'file': data.content,
+            'theory_id': theory_id,
+            'extension': data.extension
+        }));
+    }
+
+    store(_theory: Theory): Observable<Theory> {
+        return this.HttpClient.post<Theory>(`${this.prefix}`, _theory);
     }
 }

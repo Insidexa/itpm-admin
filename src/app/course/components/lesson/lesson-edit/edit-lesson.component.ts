@@ -21,7 +21,7 @@ export class EditLessonComponent implements OnInit {
 
     ngOnInit() {
         this.route.params.subscribe(params => {
-            this.LessonService.lesson(+params['id']).subscribe(lesson => {
+            this.LessonService.lesson(+params['id']).subscribe((lesson: Lesson) => {
                 this.lesson = lesson;
             });
         });

@@ -1,21 +1,20 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../../../http.service";
-import {Test} from "./test";
+import {HttpClient} from "@angular/common/http";
+
 import {Observable} from "rxjs/Observable";
-import {Response} from "@angular/http";
+import {Test} from "./test";
 import {Question} from "./question";
 import {Answer} from "./answer";
+
 
 @Injectable()
 export class TestService {
     private prefix: string;
-    private api: string;
     private maxQuestions = 10;
     private maxAnswers = 4;
 
-    constructor(private http: HttpService) {
+    constructor(private http: HttpClient) {
         this.prefix = 'test/';
-        this.api = `${this.http.adminPrefix}${this.prefix}`;
     }
 
     public guid(): string {
@@ -29,7 +28,7 @@ export class TestService {
             s4() + '-' + s4() + s4() + s4();
     }
 
-    initializeTest (unitId: number): Test {
+    public initializeTest (unitId: number): Test {
         let test = new Test();
         test.unit_id = unitId;
 
@@ -74,9 +73,7 @@ export class TestService {
         return test;
     }
 
-    store(test: Test): Observable<Test> {
-        return this.http.post(`${this.api}`, test).map((data: Response) => {
-            return this.fillableTest(data.json());
-        });
+    public store(test: Test): Observable<Test> {
+        return this.http.post<Test>(`${this.prefix}`, test);
     }
 }

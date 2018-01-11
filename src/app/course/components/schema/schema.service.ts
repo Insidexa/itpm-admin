@@ -1,24 +1,20 @@
 import {Injectable} from "@angular/core";
-import {HttpService} from "../../../http.service";
-import {Schema} from "./schema";
-import {Observable} from "rxjs/Observable";
-import {Response} from '@angular/http';
+import {HttpClient} from "@angular/common/http";
 
+import {Observable} from "rxjs/Observable";
 import 'rxjs/operator/map';
+
+import {Schema} from "./schema";
 
 @Injectable()
 export class SchemaService {
     private prefix: string;
-    private api: string;
 
-    constructor(private http: HttpService) {
+    constructor(private HttpClient: HttpClient) {
         this.prefix = 'schema/';
-        this.api = `${this.http.adminPrefix}${this.prefix}`;
     }
 
     store(schema: Schema): Observable<Schema> {
-        return this.http.post(`${this.api}`, schema).map((data: Response) => {
-            return new Schema(data.json());
-        });
+        return this.HttpClient.post<Schema>(`${this.prefix}`, schema);
     }
 }

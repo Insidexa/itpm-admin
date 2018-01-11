@@ -42,3 +42,10 @@ testem.log
 Thumbs.db
 
 .env
+
+src/environments/*
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

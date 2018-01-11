@@ -17,7 +17,7 @@
     </div>
     <div *ngIf="theory.file && theory.file.path" class="form-group">
         <label for="inputDescription" class="col-md-12 col-form-label">Предыдущий файл</label>
-        <div class="col-md-12"><a download target="_blank" href="http://localhost:8000{{theory.file.path}}">{{theory.file.path}}</a>
+        <div class="col-md-12"><a download target="_blank" href="{{ATTACHMENT_URL + theory.file.path}}">{{theory.file.path}}</a>
         </div>
     </div>
     <div class="form-group">

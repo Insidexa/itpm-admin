@@ -9,6 +9,10 @@
                     <unit *ngFor="let unit of units.data" [unit]="unit" (onRemove)="removeUnit($event)"></unit>
                 </div>
 
+                <div class="col-md-12">
+                    <pagination [paginator]="units"></pagination>
+                </div>
+
             </div>
             <div class="col-md-5">
                 <h4>Добавить</h4>

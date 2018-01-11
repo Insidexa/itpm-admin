@@ -4,17 +4,16 @@ import 'rxjs/operator/map';
 
 import {CourseService} from "./course/course.service";
 import {Course} from "./course/course";
-import {PaginationService} from "../../../helpers/services/pagination/pagination.service";
-import {IPagination} from "../../../helpers/services/pagination/pagination";
+import {PaginationService} from "../../../helpers/pagination/service/pagination.service";
+import {IPagination} from "../../../helpers/pagination/model/pagination";
 
 @Component({
     selector: `courses`,
-    templateUrl: `./courses.component.html`
+    templateUrl: `./courses.component.html`,
+    providers: [ PaginationService ]
 })
 export class CoursesComponent implements OnInit {
     public course: Course = new Course();
-    public PAGE_SIZE: number = 1;
-    public MAX_SIZE: number = 5;
 
     constructor(private CourseService: CourseService,
                 public courses: PaginationService<Course>) {
@@ -26,9 +25,9 @@ export class CoursesComponent implements OnInit {
         });
     }
 
-    addCourse(course: Course) {
-        this.CourseService.store(course).subscribe(response => {
-            this.courses.add(response.data);
+    addCourse(newCourse: Course) {
+        this.CourseService.store(newCourse).subscribe((course: Course) => {
+            this.courses.add(course);
             this.course = new Course();
         });
     }
