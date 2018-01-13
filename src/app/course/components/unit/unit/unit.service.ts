@@ -76,6 +76,12 @@ export class UnitService {
         });
     }
 
+    public restore(id: number) {
+        return this.HttpService.post(`${this.api}${id}`, {}).map((data: Response) => {
+            return data.json();
+        });
+    }
+
     delete(id: number) {
         return this.HttpService.delete(`${this.api}${id}`).map((data: Response) => {
             return data.json();

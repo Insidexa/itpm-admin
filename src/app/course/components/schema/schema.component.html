@@ -25,12 +25,12 @@
     </div>
 
     <div class="row">
-        <div class="col-md-10">
-            <div #goJSDiagram style="width:100%; height:450px; background-color: #DAE4E4;"></div>
+        <div [ngClass]="widthDiagram()">
+            <div #goJSDiagram class="diagram"></div>
         </div>
-        <div class="col-md-2">
+        <div *ngIf="existsPalette()" class="col-md-2">
             <h6>Скрытые элементы</h6>
-            <div id="palette" style="border: solid 1px black; height: 400px">
+            <div id="palette" class="palette">
                 <p style="text-align: center" draggable="true" *ngFor="let item of items;">{{item.name}}</p>
             </div>
         </div>

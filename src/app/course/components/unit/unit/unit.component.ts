@@ -1,29 +1,39 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
 import {Unit} from "./unit";
 import {ActivatedRoute} from "@angular/router";
+import {BaseItemFunctionality} from "../../base/item/base-functionality";
 
 @Component({
     selector: 'unit',
     templateUrl: `./unit.component.html`
 })
-export class UnitComponent {
+export class UnitComponent extends BaseItemFunctionality implements OnInit {
 
     @Input() unit: Unit;
-    @Output() onRemove: EventEmitter<number> = new EventEmitter<number>();
 
     public courseId: number;
 
     constructor(private ActivatedRoute: ActivatedRoute) {
+        super();
+
         this.ActivatedRoute.params.subscribe(params => {
             this.courseId = +params['courseId'];
         });
     }
 
-    public removeUnit($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
+    ngOnInit() {
+        this.routes.child.name = 'unitPage';
+        this.routes.child.params = {
+            'courseId': this.courseId,
+            'lessonId': this.unit.lesson_id,
+            'id': this.unit.id
+        };
 
-        this.onRemove.emit(this.unit.id);
+        this.routes.edit.name = 'editUnit';
+        this.routes.edit.params = {
+            'id': this.unit.id
+        };
     }
+
 }

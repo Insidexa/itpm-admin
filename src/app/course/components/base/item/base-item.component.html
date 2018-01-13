@@ -1,0 +1,22 @@
+<a [namedRoute]="routes.child.name"
+   [namedRouteParams]="routes.child.params"
+   class="list-group-item list-group-item-action flex-column align-items-start active">
+    <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{item.name}}</h5>
+        <small>
+            <button *ngIf="!item.deleted_at"
+                    (click)="removeBaseItem($event)"
+                    type="button"
+                    class="btn btn-danger btn-sm">Удалить</button>
+            <button *ngIf="item.deleted_at"
+                    (click)="restoreBaseItem($event)"
+                    type="button"
+                    class="btn btn-default btn-sm">Восстановить</button>
+        </small>
+    </div>
+    <p class="mb-1">{{item.description}}</p>
+    <a *ngIf="!item.deleted_at"
+       [namedRoute]="routes.edit.name"
+       [namedRouteParams]="routes.edit.params"
+       class="btn btn-primary btn-sm">Редактировать</a>
+</a>

@@ -6,7 +6,10 @@
             <div class="col-md-6">
 
                 <div class="list-group">
-                    <lesson *ngFor="let lesson of lessons.data" [lesson]="lesson" (onRemove)="removeLesson($event)"></lesson>
+                    <lesson *ngFor="let lesson of lessons.data"
+                            [lesson]="lesson"
+                            (onRemove)="removeLesson($event)"
+                            (onRestore)="restoreLesson($event)"></lesson>
                 </div>
 
                 <div class="col-md-12">

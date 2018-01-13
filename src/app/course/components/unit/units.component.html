@@ -6,7 +6,10 @@
             <div class="col-md-6">
 
                 <div class="list-group">
-                    <unit *ngFor="let unit of units.data" [unit]="unit" (onRemove)="removeUnit($event)"></unit>
+                    <unit *ngFor="let unit of units.data"
+                          [unit]="unit"
+                          (onRemove)="removeUnit($event)"
+                          (onRestore)="restoreUnit($event)"></unit>
                 </div>
 
                 <div class="col-md-12">

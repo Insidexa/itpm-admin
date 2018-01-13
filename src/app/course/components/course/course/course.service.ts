@@ -30,6 +30,10 @@ export class CourseService {
         return this.HttpClient.patch<Course>(`${this.prefix}${data.id}`, data);
     }
 
+    public restore (id: number) {
+        return this.HttpClient.post(`${this.prefix}${id}/restore`, {});
+    }
+
     public delete(id: number) {
         return this.HttpClient.delete(`${this.prefix}${id}`);
     }

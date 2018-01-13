@@ -1,12 +1,10 @@
-
 import {Lesson} from "../../lesson/lesson/lesson";
-export class Course {
-    id: number;
-    name: string = '';
-    description: string = '';
+import {BaseItem} from "../../base/item/base-item";
+
+export class Course extends BaseItem {
     lessons: Array<Lesson> = [];
 
     constructor(values: Object = {}) {
-        Object.assign(this, values);
+        super(values);
     }
 }

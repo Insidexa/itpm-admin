@@ -20,6 +20,8 @@ export class PaginationService<T> implements IPagination<T> {
     to: number;
     total: number;
 
+    protected autoUpdateModel: boolean = true;
+
     constructor(private HttpClient: HttpClient) {}
 
     set cur_page (page: number) {
@@ -32,7 +34,17 @@ export class PaginationService<T> implements IPagination<T> {
 
     public setPage (page: number) {
         this.cur_page = page;
-        this.loadData();
+        this.runModelUpdate();
+    }
+
+    protected runModelUpdate() {
+        if (this.autoUpdateModel) {
+            this.loadData();
+        }
+    }
+
+    public autoUpdateData(flag: boolean) {
+        this.autoUpdateModel = flag;
     }
 
     protected loadData() {
@@ -65,7 +77,7 @@ export class PaginationService<T> implements IPagination<T> {
     public remove(value: number, key: string = 'id') {
         const index = this.data.findIndex((_model: T) => _model[key] === value);
         this.data.splice(index, 1);
-        this.loadData();
+        this.runModelUpdate();
     }
 
     public add(model: T) {

@@ -29,6 +29,10 @@ export class LessonService {
         return this.HttpClient.patch<Lesson>(`${this.prefix}${data.id}`, data);
     }
 
+    public restore(id: number) {
+        return this.HttpClient.post<Lesson>(`${this.prefix}${id}`, {});
+    }
+
     public delete(id: number) {
         return this.HttpClient.delete(`${this.prefix}${id}`);
     }

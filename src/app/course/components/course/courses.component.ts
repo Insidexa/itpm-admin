@@ -37,4 +37,10 @@ export class CoursesComponent implements OnInit {
             this.courses.remove(id);
         });
     }
+
+    restoreCourse(id: number) {
+        this.CourseService.restore(id).subscribe(() => {
+            //this.courses.remove(id);
+        });
+    }
 }

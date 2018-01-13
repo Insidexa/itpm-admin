@@ -167,6 +167,13 @@ export class PERT extends Diagram {
 
     }
 
+    public getModel() {
+        let model = super.getModel();
+        model.palette = null;
+
+        return model;
+    }
+
     /**
      *
      * @param e

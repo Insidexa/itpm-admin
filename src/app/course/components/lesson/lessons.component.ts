@@ -37,9 +37,15 @@ export class LessonsComponent implements OnInit {
         });
     }
 
-    removeLesson(id) {
+    removeLesson(id: number) {
         this.LessonService.delete(id).subscribe(() => {
             this.lessons.remove(id);
+        });
+    }
+
+    restoreLesson (id: number) {
+        this.LessonService.restore(id).subscribe(() => {
+           // this.lessons.remove(id);
         });
     }
 }

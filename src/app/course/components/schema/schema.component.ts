@@ -1,12 +1,12 @@
-import {Component, ViewChild, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 
-import 'rxjs/operator/map';
+import "rxjs/operator/map";
 import {Subscription} from "rxjs/Subscription";
 
 import {SchemaService} from "./schema.service";
 import {Schema} from "./schema";
-import {instances, DiagramFactory} from '../../../helpers/diagram/instances';
+import {DiagramFactory, instances} from "../../../helpers/diagram/instances";
 import {UnitService} from "../unit/unit/unit.service";
 import {Unit} from "../unit/unit/unit";
 import Diagram from "../../../helpers/diagram/types/Diagram";
@@ -30,21 +30,19 @@ export class SchemaComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     private itemSub: Subscription;
 
-    constructor(
-        private SchemaService: SchemaService,
-        private route: ActivatedRoute,
-        private UnitService: UnitService
-    ) {
+    constructor(private SchemaService: SchemaService,
+                private route: ActivatedRoute,
+                private UnitService: UnitService) {
         this.types = instances.filter(instance => !instance.result);
         this.schema = new Schema();
     }
 
-    ngOnDestroy () {
+    ngOnDestroy() {
         this.subscription.unsubscribe();
         this.itemSub.unsubscribe();
     }
 
-    ngOnInit () {
+    ngOnInit() {
         this.subscription = this.UnitService.unit$.subscribe((unit: Unit) => {
             this.schema = unit.schema
                 ? unit.schema
@@ -59,7 +57,7 @@ export class SchemaComponent implements OnInit, OnDestroy {
         this.UnitService.callEvent('schema');
     }
 
-    fullscreen () {
+    fullscreen() {
         let elem = this.fullScreen.nativeElement;
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
@@ -70,6 +68,17 @@ export class SchemaComponent implements OnInit, OnDestroy {
         } else if (elem.webkitRequestFullscreen) {
             elem.webkitRequestFullscreen();
         }
+    }
+
+    existsPalette() {
+        return this.diagram.getModel().palette;
+    }
+
+    widthDiagram() {
+        return {
+            'col-md-10': this.existsPalette(),
+            'col-md-12': !this.existsPalette()
+        };
     }
 
     save() {
@@ -84,7 +93,7 @@ export class SchemaComponent implements OnInit, OnDestroy {
         });
     }
 
-    initDiagram () {
+    initDiagram() {
         let index = instances.findIndex((element, index) => this.type === element.value);
         this.diagram = DiagramFactory(instances[index]['class'], this.div);
         this.itemSub = this.diagram.items$.subscribe((items: Array<Object>) => {

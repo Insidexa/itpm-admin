@@ -41,4 +41,10 @@ export class UnitsComponent implements OnInit {
             this.units.remove(id);
         });
     }
+
+    public restoreUnit (id: number) {
+        this.UnitService.restore(id).subscribe(() => {
+            // this.units.remove(id);
+        });
+    }
 }

@@ -1,23 +1,28 @@
-import {Component, Input, EventEmitter, Output} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
 import {Lesson} from "./lesson";
 import {Unit} from "../../unit/unit/unit";
+import {BaseItemFunctionality} from "../../base/item/base-functionality";
 
 @Component({
     selector: 'lesson',
     templateUrl: `./lesson.component.html`
 })
-export class LessonComponent {
-
+export class LessonComponent extends BaseItemFunctionality implements OnInit {
     @Input() lesson: Lesson;
-    @Output() onRemove = new EventEmitter<number>();
 
     public unit: Unit = new Unit();
 
-    public removeLesson($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
+    ngOnInit() {
+        this.routes.child.name = 'units';
+        this.routes.child.params = {
+            'courseId': this.lesson.course_id,
+            'id': this.lesson.id
+        };
 
-        this.onRemove.emit(this.lesson.id);
+        this.routes.edit.name = 'editLesson';
+        this.routes.edit.params = {
+            'id': this.lesson.id
+        };
     }
 }

@@ -30,6 +30,8 @@ import {UnitsComponent} from "./components/unit/units.component";
 import {UnitFormComponent} from "./components/unit/unit-form/unit-form.component";
 import {UnitPageComponent} from "./components/unit/unit-page/unit-page.component";
 import {SharedModule} from "../helpers/shared.module";
+import {BaseItemService} from "./components/base/item/base-item.service";
+import {BaseItemComponent} from "./components/base/item/base-item.component";
 
 const routes: Routes = [
     {
@@ -124,6 +126,8 @@ const routes: Routes = [
         SharedModule
     ],
     providers: [
+        // BaseItemService,
+
         CourseService,
         LessonService,
         UnitService,
@@ -132,6 +136,8 @@ const routes: Routes = [
         SchemaService,
     ],
     declarations: [
+        BaseItemComponent,
+
         CoursesComponent,
         CourseComponent,
         CourseFormComponent,

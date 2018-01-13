@@ -1,14 +1,4 @@
-<a [namedRoute]="'lessons'"
-   [namedRouteParams]="{'id': course.id}"
-   class="list-group-item list-group-item-action flex-column align-items-start active">
-    <div class="d-flex w-100 justify-content-between">
-        <h5 class="mb-1">{{course.name}}</h5>
-        <small>
-            <button type="button" (click)="removeCourse($event)" class="btn btn-danger btn-sm">Удалить</button>
-        </small>
-    </div>
-    <p class="mb-1">{{course.description}}</p>
-    <a [namedRoute]="'editCourse'"
-       [namedRouteParams]="{'id': course.id}"
-       class="btn btn-primary btn-sm">Редактировать</a>
-</a>
+<base-item [item]="course"
+           [routes]="routes"
+           (onRemove)="removeItem($event)"
+           (onRestore)="restoreItem($event)"></base-item>

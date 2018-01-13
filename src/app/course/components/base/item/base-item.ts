@@ -1,11 +1,10 @@
-import {Unit} from "../../unit/unit/unit";
-export class Lesson {
+export class BaseItem {
     id: number;
     name: string = '';
     description: string = '';
-    course_id: number;
-    units: Array<Unit> = [];
-    deleted_at: string;
+    deleted_at: string | Date | null;
+
+    [key: string]: any;
 
     constructor(values: Object = {}) {
         Object.assign(this, values);

@@ -1,21 +1,20 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, Input, OnInit} from "@angular/core";
 
 import {Course} from "./course";
+import {BaseItemFunctionality} from "../../base/item/base-functionality";
 
 @Component({
     selector: `course`,
     templateUrl: `./course.component.html`
 })
-export class CourseComponent {
-
+export class CourseComponent extends BaseItemFunctionality implements OnInit {
     @Input() course: Course;
-    @Output() onRemove = new EventEmitter<number>();
 
-    removeCourse($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
+    ngOnInit() {
+        this.routes.child.name = 'lessons';
+        this.routes.child.params = {'id': this.course.id};
 
-        this.onRemove.emit(this.course.id);
+        this.routes.edit.name = 'editCourse';
+        this.routes.edit.params = {'id': this.course.id};
     }
-
 }
