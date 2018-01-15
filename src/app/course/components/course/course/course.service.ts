@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {Course} from "./course";
-import {IPagination} from "../../../../helpers/pagination/model/pagination";
+import {IPagination} from "../../../../shared/components/pagination/model/pagination";
 
 @Injectable()
 export class CourseService {

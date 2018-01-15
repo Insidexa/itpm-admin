@@ -1,9 +1,7 @@
 import {Lesson} from "../../lesson/lesson/lesson";
-import {BaseItem} from "../../base/item/base-item";
+import {BaseItem} from "../../../../shared/components/item/base-item";
 
 export class Course extends BaseItem {
-    lessons: Array<Lesson> = [];
-
     constructor(values: Object = {}) {
         super(values);
     }

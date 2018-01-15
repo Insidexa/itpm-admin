@@ -4,11 +4,11 @@ export interface IRouteBaseItem {
 }
 
 export interface IRoutesBaseItem {
-    child: IRouteBaseItem;
+    child?: IRouteBaseItem;
     edit: IRouteBaseItem;
 }
 
 export class RoutesBaseItem implements IRoutesBaseItem {
-    child: IRouteBaseItem = {name: '', params: {}};
+    child?: IRouteBaseItem = {name: '', params: {}};
     edit: IRouteBaseItem = {name: '', params: {}};
 }

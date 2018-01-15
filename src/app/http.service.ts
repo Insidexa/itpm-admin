@@ -1,7 +1,7 @@
 import {Http, XHRBackend, RequestOptions, Request, RequestOptionsArgs, Response, Headers} from "@angular/http";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {JWTService} from "./helpers/services/jwt";
+import {JWTService} from "./shared/services/jwt";
 import {environment} from "../environments/environment";
 
 @Injectable()

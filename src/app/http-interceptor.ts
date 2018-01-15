@@ -7,7 +7,7 @@ import 'rxjs/add/operator/catch';
 
 import {ToastsManager} from "ng2-toastr";
 
-import {JWTService} from "./helpers/services/jwt";
+import {JWTService} from "./shared/services/jwt";
 import {environment} from "../environments/environment";
 
 

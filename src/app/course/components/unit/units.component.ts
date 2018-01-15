@@ -5,8 +5,8 @@ import 'rxjs/operator/map';
 
 import {UnitService} from "./unit/unit.service";
 import {Unit} from "./unit/unit";
-import {PaginationService} from "../../../helpers/pagination/service/pagination.service";
-import {IPagination} from "../../../helpers/pagination/model/pagination";
+import {PaginationService} from "../../../shared/components/pagination/service/pagination.service";
+import {IPagination} from "../../../shared/components/pagination/model/pagination";
 
 @Component({
     selector: `units`,
@@ -32,13 +32,13 @@ export class UnitsComponent implements OnInit {
 
     public addUnit(unit: Unit) {
         this.UnitService.store(unit).subscribe((lesson: Unit) => {
-            this.units.add(lesson);
+            this.units.addToCollection(lesson);
         });
     }
 
     public removeUnit(id) {
         this.UnitService.delete(id).subscribe(() => {
-            this.units.remove(id);
+            this.units.removeFromCollection(id);
         });
     }
 

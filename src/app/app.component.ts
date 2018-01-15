@@ -9,7 +9,7 @@ import {ToastsManager} from "ng2-toastr";
 export class AppComponent {
   constructor(
       private vcr: ViewContainerRef,
-      private toast: ToastsManager
+      private toast: ToastsManager,
   ) {
     this.toast.setRootViewContainerRef(vcr);
   }

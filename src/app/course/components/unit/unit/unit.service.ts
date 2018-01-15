@@ -9,7 +9,7 @@ import {Subject} from "rxjs/Subject";
 import {Test} from "../../test/test";
 import {Theory} from "../../theory/theory";
 import {Schema} from "../../schema/schema";
-import {IPagination} from "../../../../helpers/pagination/model/pagination";
+import {IPagination} from "../../../../shared/components/pagination/model/pagination";
 
 @Injectable()
 export class UnitService {

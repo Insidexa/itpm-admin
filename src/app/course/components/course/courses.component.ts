@@ -4,8 +4,8 @@ import 'rxjs/operator/map';
 
 import {CourseService} from "./course/course.service";
 import {Course} from "./course/course";
-import {PaginationService} from "../../../helpers/pagination/service/pagination.service";
-import {IPagination} from "../../../helpers/pagination/model/pagination";
+import {PaginationService} from "../../../shared/components/pagination/service/pagination.service";
+import {IPagination} from "../../../shared/components/pagination/model/pagination";
 
 @Component({
     selector: `courses`,
@@ -27,14 +27,14 @@ export class CoursesComponent implements OnInit {
 
     addCourse(newCourse: Course) {
         this.CourseService.store(newCourse).subscribe((course: Course) => {
-            this.courses.add(course);
+            this.courses.addToCollection(course);
             this.course = new Course();
         });
     }
 
     removeCourse(id: number) {
         this.CourseService.delete(id).subscribe(() => {
-            this.courses.remove(id);
+            this.courses.removeFromCollection(id);
         });
     }
 

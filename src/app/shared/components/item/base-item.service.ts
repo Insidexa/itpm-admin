@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {BaseItem} from "./base-item";
-import {IPagination} from "../../../../helpers/pagination/model/pagination";
+import {IPagination} from "../pagination/model/pagination";
 
 @Injectable()
 export class BaseItemService {

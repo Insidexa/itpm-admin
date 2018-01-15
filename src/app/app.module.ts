@@ -10,14 +10,14 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import {HttpService} from "./http.service";
-import {StorageService} from "./helpers/services/storage";
-import {AuthService} from "./helpers/services/auth";
-import {JWTService} from "./helpers/services/jwt";
-import {AuthGuard} from "./helpers/guards/auth";
+import {StorageService} from "./shared/services/storage";
+import {AuthService} from "./shared/services/auth";
+import {JWTService} from "./shared/services/jwt";
+import {AuthGuard} from "./shared/guards/auth";
 import {ToastModule} from "ng2-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {HttpServiceFactory} from "./http-service.factory";
-import {NamedRouteService} from "./helpers/named-route/named-route.service";
+import {NamedRouteService} from "./shared/directives/named-route-directive/named-route.service";
 import {MyHttpInterceptor} from "./http-interceptor";
 
 const appRoutes: Routes = [
@@ -25,6 +25,9 @@ const appRoutes: Routes = [
     // root route
     pathMatch: 'full',
     path: '', component: HomeComponent,
+    data: {
+      routeName: 'home'
+    }
   },
   {
     path: 'panel',
@@ -45,7 +48,7 @@ const appRoutes: Routes = [
     ToastModule.forRoot(),
     BrowserAnimationsModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
   ],
   declarations: [
     AppComponent,

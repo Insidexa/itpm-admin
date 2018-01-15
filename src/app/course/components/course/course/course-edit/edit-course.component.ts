@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {Course} from "../course";
 import {CourseService} from "../course.service";
-import {NamedRouteService} from "../../../../../helpers/named-route/named-route.service";
+import {NamedRouteService} from "../../../../../shared/directives/named-route-directive/named-route.service";
 
 @Component({
     selector: `edit-course`,

@@ -2,9 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ResultService} from "./services/result.service";
 import {IQuestion, IResult, ISchema} from "./models/result";
-import Diagram from "../../helpers/diagram/types/Diagram";
-import {AuthService} from "../../helpers/services/auth";
-import {instances, DiagramFactory} from "../../helpers/diagram/instances";
+import Diagram from "../../shared/diagram/types/Diagram";
+import {AuthService} from "../../shared/services/auth";
+import {instances, DiagramFactory} from "../../shared/diagram/instances";
 
 @Component({
   selector: 'app-result',

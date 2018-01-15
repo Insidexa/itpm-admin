@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 
 import {Lesson} from "./lesson";
 import {Unit} from "../../unit/unit/unit";
-import {BaseItemFunctionality} from "../../base/item/base-functionality";
+import {BaseItemFunctionality} from "../../../../shared/components/item/base-functionality";
 
 @Component({
     selector: 'lesson',

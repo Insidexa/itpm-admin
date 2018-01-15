@@ -24,7 +24,7 @@ export class NamedRouteDirective implements OnInit {
 
     ngOnInit () {
         let params = this.namedRouteParams ? this.namedRouteParams : {};
-        this.url = this.NamedRouteService.getRoute(this.namedRoute, params);
+        this.url = this.NamedRouteService.getRouteUrl(this.namedRoute, params);
         this.ElementRef.nativeElement.href = this.url;
     }
 }

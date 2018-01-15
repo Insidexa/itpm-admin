@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from "@angular/core";
 
 import {Course} from "./course";
-import {BaseItemFunctionality} from "../../base/item/base-functionality";
+import {BaseItemFunctionality} from "../../../../shared/components/item/base-functionality";
 
 @Component({
     selector: `course`,

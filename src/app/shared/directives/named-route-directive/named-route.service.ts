@@ -6,15 +6,13 @@ let routes: any = {};
 @Injectable()
 export class NamedRouteService {
     constructor(private Router: Router) {
-        if (Object.keys(routes).length === 0) {
-            this.getRoutes('', this.Router.config);
-        }
+        this.getRoutes('', this.Router.config);
     }
 
-    getRoutes(parent: String, config: Route[]) {
+    private getRoutes(parent: string, config: Route[]) {
         const length = config.length;
         for (let i = 0; i < length; i++) {
-            let route: Route = config[i];
+            const route: Route = config[i];
             let fullPath = `${parent}/${route.path}`;
 
             fullPath = fullPath.replace('//', '/');
@@ -32,20 +30,28 @@ export class NamedRouteService {
                 this.getRoutes(fullPath, route.children)
             }
         }
+
+        return this;
     }
 
     public navigateByName (routeName: string, routeParams?: any) {
         const params = routeParams ? routeParams : {};
-        const url = this.getRoute(routeName, params);
+        const url = this.getRouteUrl(routeName, params);
         return this.Router.navigate([url]);
     }
 
-    public getRoute(routeName: string, params: any) {
+    public getRouteData (routeName: string): any {
         if ( ! routes.hasOwnProperty(routeName) ) {
             throw new Error(`Route by routeName '${routeName}' not exists`);
         }
 
-        let url = routes[routeName]['fullPath'];
+        return routes[routeName];
+    }
+
+    public getRouteUrl(routeName: string, params: any) {
+        const routeData = this.getRouteData(routeName);
+
+        let url = routeData['fullPath'];
         for (let param in params) {
             if (params.hasOwnProperty(param)) {
                 url = url.replace(`:${param}`, params[param]);

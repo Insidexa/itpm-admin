@@ -5,8 +5,8 @@ import 'rxjs/operator/map';
 
 import {LessonService} from "./lesson/lesson.service";
 import {Lesson} from "./lesson/lesson";
-import {PaginationService} from "../../../helpers/pagination/service/pagination.service";
-import {IPagination} from "../../../helpers/pagination/model/pagination";
+import {PaginationService} from "../../../shared/components/pagination/service/pagination.service";
+import {IPagination} from "../../../shared/components/pagination/model/pagination";
 
 
 @Component({
@@ -33,13 +33,13 @@ export class LessonsComponent implements OnInit {
 
     addLesson(lesson: Lesson) {
         this.LessonService.store(lesson).subscribe((lesson: Lesson) => {
-            this.lessons.add(lesson);
+            this.lessons.addToCollection(lesson);
         });
     }
 
     removeLesson(id: number) {
         this.LessonService.delete(id).subscribe(() => {
-            this.lessons.remove(id);
+            this.lessons.removeFromCollection(id);
         });
     }
 

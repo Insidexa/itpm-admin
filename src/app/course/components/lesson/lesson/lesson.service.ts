@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 import {Lesson} from "./lesson";
-import {IPagination} from "../../../../helpers/pagination/model/pagination";
+import {IPagination} from "../../../../shared/components/pagination/model/pagination";
 
 @Injectable()
 export class LessonService {

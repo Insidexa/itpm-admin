@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from "@angular/core";
 
 import {Unit} from "./unit";
 import {ActivatedRoute} from "@angular/router";
-import {BaseItemFunctionality} from "../../base/item/base-functionality";
+import {BaseItemFunctionality} from "../../../../shared/components/item/base-functionality";
 
 @Component({
     selector: 'unit',

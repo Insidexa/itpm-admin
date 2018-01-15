@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 
 import {Lesson} from "../lesson/lesson";
 import {LessonService} from "../lesson/lesson.service";
-import {NamedRouteService} from "../../../../helpers/named-route/named-route.service";
+import {NamedRouteService} from "../../../../shared/directives/named-route-directive/named-route.service";
 
 @Component({
     selector: `edit-lesson`,

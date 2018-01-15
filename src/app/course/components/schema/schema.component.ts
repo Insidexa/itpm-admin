@@ -6,10 +6,10 @@ import {Subscription} from "rxjs/Subscription";
 
 import {SchemaService} from "./schema.service";
 import {Schema} from "./schema";
-import {DiagramFactory, instances} from "../../../helpers/diagram/instances";
+import {DiagramFactory, instances} from "../../../shared/diagram/instances";
 import {UnitService} from "../unit/unit/unit.service";
 import {Unit} from "../unit/unit/unit";
-import Diagram from "../../../helpers/diagram/types/Diagram";
+import Diagram from "../../../shared/diagram/types/Diagram";
 
 @Component({
     selector: `schema`,
