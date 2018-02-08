@@ -1,12 +1,12 @@
 export class BaseItem {
-    id: number;
-    name: string = '';
-    description: string = '';
-    deleted_at: string | Date | null;
+  id: number;
+  name: string = '';
+  description: string = '';
+  deleted_at: string | Date | null;
 
-    [key: string]: any;
+  [key: string]: any;
 
-    constructor(values: Object = {}) {
-        Object.assign(this, values);
-    }
+  constructor(values: Object = {}) {
+    Object.assign(this, values);
+  }
 }

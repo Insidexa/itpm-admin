@@ -19,7 +19,9 @@
                         <div *ngIf="testForm.controls['question_' + questionIndex].invalid && (testForm.controls['question_' + questionIndex].dirty || testForm.controls['question_' + questionIndex].touched)"
                              class="alert alert-danger">
 
-                            <div *ngIf="testForm.controls['question_' + questionIndex].errors.required">Имя вопроса обязательно</div>
+                            <div *ngIf="testForm.controls['question_' + questionIndex].errors.required">Имя вопроса
+                                обязательно
+                            </div>
 
                         </div>
                     </div>
@@ -31,7 +33,8 @@
                         <li *ngFor="let answer of question.answers; let answerIndex = index">
                             <p>Ответ({{answerIndex + 1}}) - {{answer.name}}</p>
                             <div class="row">
-                                <div class="col-md-10" [ngClass]="{'has-success': isSelected(questionIndex, answerIndex)}">
+                                <div class="col-md-10"
+                                     [ngClass]="{'has-success': isSelected(questionIndex, answerIndex)}">
                                     <input [ngClass]="{'form-control-success': isSelected(questionIndex, answerIndex)}"
                                            class="form-control"
                                            type="text"
@@ -43,7 +46,9 @@
                                         <div *ngIf="testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].invalid && (testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].dirty || testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].touched)"
                                              class="alert alert-danger">
 
-                                            <div *ngIf="testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].errors.required">Имя ответа обязательно</div>
+                                            <div *ngIf="testForm.controls['question_' + questionIndex + '_answer_name_' + answerIndex].errors.required">
+                                                Имя ответа обязательно
+                                            </div>
 
                                         </div>
                                     </div>
@@ -61,7 +66,8 @@
                                         <div *ngIf="testForm.controls['question_' + question.id + '_answer'].invalid && (testForm.controls['question_' + question.id + '_answer'].dirty || testForm.controls['question_' + question.id + '_answer'].touched)"
                                              class="alert alert-danger">
 
-                                            <div *ngIf="testForm.controls['question_' + question.id + '_answer'].errors.required">Выберите один с
+                                            <div *ngIf="testForm.controls['question_' + question.id + '_answer'].errors.required">
+                                                Выберите один с
                                                 элементов в качестве ответа
                                             </div>
 

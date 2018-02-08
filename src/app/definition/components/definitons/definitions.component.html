@@ -12,9 +12,9 @@
 
                 <div class="list-group">
                     <definition *ngFor="let definition of definitions.data"
-                            [definition]="definition"
-                            (onRemove)="removeDefinition(definition.id)"
-                            (onRestore)="restoreDefinition(definition.id)"></definition>
+                                [definition]="definition"
+                                (onRemove)="removeDefinition(definition.id)"
+                                (onRestore)="restoreDefinition(definition.id)"></definition>
                 </div>
 
                 <div class="col-md-12">

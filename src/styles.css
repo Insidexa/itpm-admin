@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~ng2-toastr/bundles/ng2-toastr.min.css";
-
+@import "~dhtmlx-gantt/codebase/dhtmlxgantt.css";
 /*
  * Base structure
  */

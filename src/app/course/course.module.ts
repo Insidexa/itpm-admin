@@ -1,5 +1,5 @@
 import {NgModule} from "@angular/core";
-import {Routes, RouterModule} from "@angular/router";
+import {RouterModule, Routes} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
@@ -19,8 +19,8 @@ import {LessonService} from "./components/lesson/lesson/lesson.service";
 import {UnitService} from "./components/unit/unit/unit.service";
 import {TheoryService} from "./components/theory/theory.service";
 import {TestService} from "./components/test/test.service";
-import {SchemaComponent} from "./components/schema/schema.component";
-import {SchemaService} from "./components/schema/schema.service";
+import {SchemaPageComponent} from "./components/schema/schema-page.component";
+import {SchemaPageService} from "./components/schema/schema-page.service";
 import {SliderComponent} from "./components/test/slider/slider.component";
 import {CourseFormComponent} from "./components/course/course/course-form/course-form.component";
 import {LessonFormComponent} from "./components/lesson/lesson-form/lesson-form.component";
@@ -30,128 +30,136 @@ import {UnitFormComponent} from "./components/unit/unit-form/unit-form.component
 import {UnitPageComponent} from "./components/unit/unit-page/unit-page.component";
 import {SharedModule} from "../shared/shared.module";
 
+import {ITPMModule, NamedRouteModule, PaginationModule} from "itpm-shared";
+import {environment} from "../../environments/environment";
+
 const routes: Routes = [
-    {
+  {
+    path: '',
+    component: CoursesComponent,
+    data: {
+      routeName: 'courses'
+    }
+  },
+  {
+    path: ':id/edit',
+    component: EditCourseComponent,
+    data: {
+      routeName: 'editCourse'
+    }
+  },
+  {
+    path: ':id/lessons',
+    component: LessonsComponent,
+    data: {
+      routeName: 'lessons'
+    }
+  },
+  {
+    path: 'lessons/:id/edit',
+    component: EditLessonComponent,
+    data: {
+      routeName: 'editLesson'
+    }
+  },
+  {
+    path: ':courseId/lessons/:id/units',
+    component: UnitsComponent,
+    data: {
+      routeName: 'units'
+    }
+  },
+  {
+    path: 'units/:id/edit',
+    component: EditUnitComponent,
+    data: {
+      routeName: 'editUnit'
+    }
+  },
+  {
+    path: ':courseId/lessons/:lessonId/units/:id',
+    component: UnitPageComponent,
+    data: {
+      routeName: 'unitPage'
+    },
+    children: [
+      {
         path: '',
-        component: CoursesComponent,
+        redirectTo: 'theory',
+        pathMatch: 'full',
         data: {
-            routeName: 'courses'
+          routeName: 'unit'
         }
-    },
-    {
-        path: ':id/edit',
-        component: EditCourseComponent,
+      },
+      {
+        path: 'theory',
+        component: TheoryComponent,
         data: {
-            routeName: 'editCourse'
+          routeName: 'unitTheory'
         }
-    },
-    {
-        path: ':id/lessons',
-        component: LessonsComponent,
+      },
+      {
+        path: 'schema',
+        component: SchemaPageComponent,
         data: {
-            routeName: 'lessons'
+          routeName: 'unitSchema'
         }
-    },
-    {
-        path: 'lessons/:id/edit',
-        component: EditLessonComponent,
+      },
+      {
+        path: 'test',
+        component: TestComponent,
         data: {
-            routeName: 'editLesson'
+          routeName: 'unitTest'
         }
-    },
-    {
-        path: ':courseId/lessons/:id/units',
-        component: UnitsComponent,
-        data: {
-            routeName: 'units'
-        }
-    },
-    {
-        path: 'units/:id/edit',
-        component: EditUnitComponent,
-        data: {
-            routeName: 'editUnit'
-        }
-    },
-    {
-        path: ':courseId/lessons/:lessonId/units/:id',
-        component: UnitPageComponent,
-        data: {
-            routeName: 'unitPage'
-        },
-        children: [
-            {
-                path: '',
-                redirectTo: 'theory',
-                pathMatch: 'full',
-                data: {
-                    routeName: 'unit'
-                }
-            },
-            {
-                path: 'theory',
-                component: TheoryComponent,
-                data: {
-                    routeName: 'unitTheory'
-                }
-            },
-            {
-                path: 'schema',
-                component: SchemaComponent,
-                data: {
-                    routeName: 'unitSchema'
-                }
-            },
-            {
-                path: 'test',
-                component: TestComponent,
-                data: {
-                    routeName: 'unitTest'
-                }
-            }
-        ]
-    },
+      }
+    ]
+  },
 ];
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        RouterModule.forChild(routes),
-        NgbModule.forRoot(),
-        SharedModule
-    ],
-    providers: [
-        CourseService,
-        LessonService,
-        UnitService,
-        TheoryService,
-        TestService,
-        SchemaService,
-    ],
-    declarations: [
-        CoursesComponent,
-        CourseComponent,
-        CourseFormComponent,
-        EditCourseComponent,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(routes),
+    NgbModule.forRoot(),
 
-        EditLessonComponent,
-        LessonsComponent,
-        LessonFormComponent,
-        LessonComponent,
+    SharedModule,
 
-        UnitPageComponent,
-        UnitsComponent,
-        UnitFormComponent,
-        EditUnitComponent,
-        UnitComponent,
+    NamedRouteModule,
+    PaginationModule.forRoot(environment),
+    ITPMModule.forRoot(environment)
+  ],
+  providers: [
+    CourseService,
+    LessonService,
+    UnitService,
+    TheoryService,
+    TestService,
+    SchemaPageService,
+  ],
+  declarations: [
+    CoursesComponent,
+    CourseComponent,
+    CourseFormComponent,
+    EditCourseComponent,
 
-        TheoryComponent,
-        TestComponent,
-        SchemaComponent,
-        SliderComponent
-    ]
+    EditLessonComponent,
+    LessonsComponent,
+    LessonFormComponent,
+    LessonComponent,
+
+    UnitPageComponent,
+    UnitsComponent,
+    UnitFormComponent,
+    EditUnitComponent,
+    UnitComponent,
+
+    TheoryComponent,
+    TestComponent,
+    SchemaPageComponent,
+    SliderComponent
+  ]
 })
 export class CourseModule {
 }

@@ -11,7 +11,8 @@
         </div>
         <div class="col-sm-12" *ngIf="courseGroup.controls['name'].errors && courseGroup.controls['name'].touched">
             <p *ngIf="courseGroup.controls['name'].errors.required">Введите имя</p>
-            <p *ngIf="courseGroup.controls['name'].errors.minlength">Мин {{courseGroup.controls['name'].errors.minlength.requiredLength}} букв</p>
+            <p *ngIf="courseGroup.controls['name'].errors.minlength">Мин
+                {{courseGroup.controls['name'].errors.minlength.requiredLength}} букв</p>
         </div>
     </div>
     <div class="form-group row">

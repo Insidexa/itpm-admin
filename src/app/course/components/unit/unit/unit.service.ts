@@ -1,90 +1,72 @@
 import {Injectable} from "@angular/core";
 
-import 'rxjs/operator/map';
-import {Response} from "@angular/http";
-import {Observable} from "rxjs";
-import {HttpService} from "../../../../http.service";
-import {Unit} from "./unit";
 import {Subject} from "rxjs/Subject";
-import {Test} from "../../test/test";
-import {Theory} from "../../theory/theory";
-import {Schema} from "../../schema/schema";
-import {IPagination} from "../../../../shared/components/pagination/model/pagination";
+import {Observable} from "rxjs";
+import "rxjs/operator/map";
+
+import {Unit, Test, Theory, Schema, IPagination, AppHttpClient} from 'itpm-shared';
 
 @Injectable()
 export class UnitService {
-    private prefix: string;
-    private api: string;
+  private prefix: string;
 
-    private unitSource = new Subject<Unit>();
-    private testSource = new Subject<Test>();
-    private theorySource = new Subject<Theory>();
-    private schemaSource = new Subject<Schema>();
-    private eventSource = new Subject<string>();
+  private unitSource = new Subject<Unit>();
+  private testSource = new Subject<Test>();
+  private theorySource = new Subject<Theory>();
+  private schemaSource = new Subject<Schema>();
+  private eventSource = new Subject<string>();
 
-    unit$ = this.unitSource.asObservable();
-    test$ = this.testSource.asObservable();
-    theory$ = this.theorySource.asObservable();
-    schema$ = this.schemaSource.asObservable();
-    event$ = this.eventSource.asObservable();
+  unit$ = this.unitSource.asObservable();
+  test$ = this.testSource.asObservable();
+  theory$ = this.theorySource.asObservable();
+  schema$ = this.schemaSource.asObservable();
+  event$ = this.eventSource.asObservable();
 
-    constructor(private HttpService: HttpService) {
-        this.prefix = 'units/';
-        this.api = `${this.HttpService.adminPrefix}${this.prefix}`;
-    }
+  constructor(private HttpClient: AppHttpClient) {
+    this.prefix = 'units/';
+  }
 
-    pushUnit(unit: Unit) {
-        this.unitSource.next(unit);
-    }
+  public pushUnit(unit: Unit) {
+    this.unitSource.next(unit);
+  }
 
-    pushTest (test: Test) {
-        this.testSource.next(test);
-    }
+  public pushTest(test: Test) {
+    this.testSource.next(test);
+  }
 
-    pushTheory (theory: Theory) {
-        this.theorySource.next(theory);
-    }
+  public pushTheory(theory: Theory) {
+    this.theorySource.next(theory);
+  }
 
-    pushSchema (schema: Schema) {
-        this.schemaSource.next(schema);
-    }
+  public pushSchema(schema: Schema) {
+    this.schemaSource.next(schema);
+  }
 
-    callEvent(event: string) {
-        this.eventSource.next(event);
-    }
+  public callEvent(event: string) {
+    this.eventSource.next(event);
+  }
 
-    unit(id: number): Observable<Unit> {
-        return this.HttpService.get(`${this.api}${id}`).map((data: Response) => {
-            return new Unit(data.json().data);
-        });
-    }
+  public unit(id: number): Observable<Unit> {
+    return this.HttpClient.get<Unit>(`${this.prefix}${id}`);
+  }
 
-    all(lessonId: number): Observable<IPagination<Unit>> {
-        return this.HttpService.get(`${this.api}?lesson_id=${lessonId}`)
-            .map((data: Response) => data.json().data);
-    }
+  public all(lessonId: number): Observable<IPagination<Unit>> {
+    return this.HttpClient.get<IPagination<Unit>>(`${this.prefix}?lesson_id=${lessonId}`);
+  }
 
-    store(data: Unit): Observable<Unit> {
-        return this.HttpService.post(`${this.api}`, data).map((data: Response) => {
-            return new Unit(data.json().data);
-        });
-    }
+  public store(data: Unit): Observable<Unit> {
+    return this.HttpClient.post<Unit>(`${this.prefix}`, data);
+  }
 
-    update(data: Unit) {
-        return this.HttpService.patch(`${this.api}${data.id}`, data).map((data: Response) => {
-            return data.json();
-        });
-    }
+  public update(data: Unit): Observable<Unit> {
+    return this.HttpClient.patch<Unit>(`${this.prefix}${data.id}`, data);
+  }
 
-    public restore(id: number) {
-        return this.HttpService.post(`${this.api}${id}`, {}).map((data: Response) => {
-            return data.json();
-        });
-    }
+  public restore(id: number) {
+    return this.HttpClient.post<Unit>(`${this.prefix}${id}`, {});
+  }
 
-    delete(id: number) {
-        return this.HttpService.delete(`${this.api}${id}`).map((data: Response) => {
-            return data.json();
-        });
-    }
+  public delete(id: number) {
+    return this.HttpClient.delete(`${this.prefix}${id}`);
+  }
 }

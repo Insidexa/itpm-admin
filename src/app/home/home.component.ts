@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {User} from "./user";
-import {AuthService} from "../shared/services/auth";
+import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
+
+import {AuthService, User} from "itpm-shared";
 
 @Component({
   selector: 'app-home',
@@ -10,24 +10,21 @@ import {Router} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
 
-  user:User;
+  user: User;
 
-  constructor(
-      private httpService: AuthService,
-      private auth: AuthService,
-      private router: Router
-  ) {
+  constructor(private AuthService: AuthService,
+              private router: Router) {
     this.user = new User();
   }
 
   ngOnInit() {
-    if (this.auth.isAuth()) {
+    if (this.AuthService.isAuth()) {
       this.router.navigate(['/panel']);
     }
   }
 
   onSubmit() {
-    this.httpService.auth(this.user).subscribe(data => {
+    this.AuthService.auth(this.user).subscribe(data => {
       this.router.navigate(['/panel']);
     });
   }

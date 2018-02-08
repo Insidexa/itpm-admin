@@ -1,25 +1,25 @@
 import {Component, EventEmitter, Output} from "@angular/core";
 
 enum TYPES {
-    ALL = 0,
-    ONLY_TRASHED = 1,
+  ALL = 0,
+  ONLY_TRASHED = 1,
 }
 
 @Component({
-    selector: 'search-item',
-    templateUrl: './search-item.component.html'
+  selector: 'search-item',
+  templateUrl: './search-item.component.html'
 })
 export class SearchItemComponent {
-    @Output() onChange: EventEmitter<TYPES> = new EventEmitter<TYPES>();
+  @Output() onChange: EventEmitter<TYPES> = new EventEmitter<TYPES>();
 
-    public types = TYPES;
+  public types = TYPES;
 
-    public all () {
-        this.onChange.emit(TYPES.ALL);
-    }
+  public all() {
+    this.onChange.emit(TYPES.ALL);
+  }
 
-    public onlyTrashed () {
-        this.onChange.emit(TYPES.ONLY_TRASHED);
-    }
+  public onlyTrashed() {
+    this.onChange.emit(TYPES.ONLY_TRASHED);
+  }
 
 }

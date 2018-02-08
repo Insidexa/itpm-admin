@@ -9,7 +9,8 @@
                    class="form-control"
                    id="inputName">
         </div>
-        <div class="col-sm-12" *ngIf="definitionGroup.controls['name'].errors && definitionGroup.controls['name'].touched">
+        <div class="col-sm-12"
+             *ngIf="definitionGroup.controls['name'].errors && definitionGroup.controls['name'].touched">
             <p *ngIf="definitionGroup.controls['name'].errors.required">Введите имя</p>
             <p *ngIf="definitionGroup.controls['name'].errors.minlength">Мин
                 {{definitionGroup.controls['name'].errors.minlength.requiredLength}} букв</p>

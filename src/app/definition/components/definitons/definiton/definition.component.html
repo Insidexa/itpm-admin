@@ -5,11 +5,13 @@
             <button *ngIf="!definition.deleted_at"
                     (click)="removeDefinition($event)"
                     type="button"
-                    class="btn btn-danger btn-sm">Удалить</button>
+                    class="btn btn-danger btn-sm">Удалить
+            </button>
             <button *ngIf="definition.deleted_at"
                     (click)="restoreDefinition($event)"
                     type="button"
-                    class="btn btn-default btn-sm">Восстановить</button>
+                    class="btn btn-default btn-sm">Восстановить
+            </button>
         </small>
     </div>
     <p class="mb-1">{{definition.description}}</p>

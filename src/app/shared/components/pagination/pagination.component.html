@@ -1,9 +1,0 @@
-<div *ngIf="paginator.data.length > 0">
-    <ngb-pagination [collectionSize]="paginator.total"
-                    [(page)]="paginator.cur_page"
-                    [pageSize]="pageSize"
-                    [maxSize]="maxSize"
-                    [rotate]="true"
-                    (pageChange)="changePage($event)"
-                    [boundaryLinks]="true"></ngb-pagination>
-</div>
