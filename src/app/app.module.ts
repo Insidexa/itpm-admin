@@ -44,7 +44,7 @@ const appRoutes: Routes = [
     NgbModule.forRoot(),
 
     AuthModule,
-    ITPMModule.forRoot(environment)
+    ITPMModule.forRoot(environment),
   ],
   declarations: [
     AppComponent,

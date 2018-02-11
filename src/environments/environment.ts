@@ -1,7 +1,6 @@
 
 export const environment = {
   production: false,
-  hmr: false,
   apiHost: 'http://localhost:8000/',
   apiPrefix: 'api/',
   adminPrefix: 'admin/',

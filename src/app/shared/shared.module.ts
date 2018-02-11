@@ -7,7 +7,12 @@ import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {BaseItemComponent} from "./components/item/base-item.component";
 import {SearchItemComponent} from "./components/search-item/search-item.component";
 
-import {AuthModule, ITPMModule, NamedRouteModule} from "itpm-shared";
+import {
+  AuthModule,
+  ITPMModule,
+  NamedRouteModule,
+  InterceptorMessageModule
+} from "itpm-shared";
 import {environment} from "../../environments/environment";
 
 @NgModule({
@@ -18,7 +23,8 @@ import {environment} from "../../environments/environment";
 
     AuthModule,
     NamedRouteModule,
-    ITPMModule.forRoot(environment)
+    ITPMModule.forRoot(environment),
+    InterceptorMessageModule
   ],
   providers: [],
   declarations: [

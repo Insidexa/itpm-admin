@@ -30,7 +30,13 @@ import {UnitFormComponent} from "./components/unit/unit-form/unit-form.component
 import {UnitPageComponent} from "./components/unit/unit-page/unit-page.component";
 import {SharedModule} from "../shared/shared.module";
 
-import {ITPMModule, NamedRouteModule, PaginationModule} from "itpm-shared";
+import {
+  AuthModule,
+  InterceptorMessageModule,
+  ITPMModule,
+  NamedRouteModule,
+  PaginationModule
+} from "itpm-shared";
 import {environment} from "../../environments/environment";
 
 const routes: Routes = [
@@ -126,9 +132,11 @@ const routes: Routes = [
 
     SharedModule,
 
+    AuthModule,
     NamedRouteModule,
     PaginationModule.forRoot(environment),
-    ITPMModule.forRoot(environment)
+    ITPMModule.forRoot(environment),
+    InterceptorMessageModule
   ],
   providers: [
     CourseService,

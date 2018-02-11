@@ -1,18 +1,23 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {RouterModule, Routes} from "@angular/router";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule, Routes } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
-import {DefinitionsComponent} from "./components/definitons/definitions.component";
-import {DefinitionService} from "./components/definitons/definiton/definition.service";
-import {DefinitionComponent} from "./components/definitons/definiton/definition.component";
-import {EditDefinitionComponent} from "./components/definitons/definiton/definition-edit/edit-definition.component";
-import {DefinitionFormComponent} from "./components/definitons/definiton/definition-form/definition-form.component";
+import { DefinitionsComponent } from "./components/definitons/definitions.component";
+import { DefinitionService } from "./components/definitons/definiton/definition.service";
+import { DefinitionComponent } from "./components/definitons/definiton/definition.component";
+import { EditDefinitionComponent } from "./components/definitons/definiton/definition-edit/edit-definition.component";
+import { DefinitionFormComponent } from "./components/definitons/definiton/definition-form/definition-form.component";
 
-import {NamedRouteModule, PaginationModule, ITPMModule} from "itpm-shared";
-import {environment} from "../../environments/environment";
+import {
+  ITPMModule,
+  NamedRouteModule,
+  PaginationModule,
+  InterceptorMessageModule
+} from "itpm-shared";
+import { environment } from "../../environments/environment";
 
 const routes: Routes = [
   {
@@ -41,7 +46,8 @@ const routes: Routes = [
 
     NamedRouteModule,
     PaginationModule.forRoot(environment),
-    ITPMModule.forRoot(environment)
+    ITPMModule.forRoot(environment),
+    InterceptorMessageModule
   ],
   providers: [
     DefinitionService
