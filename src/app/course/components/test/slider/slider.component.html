@@ -1,7 +1,7 @@
 <div class="test-slider hidden-xs-down hidden-sm-down">
     <ul>
         <li *ngFor="let question of questions; let questionIndex = index">
-            <a (click)="doNothing($event, questionIndex)" href="#">{{question.name}}</a>
+            <a (click)="scrollTo($event, questionIndex)" href="#">{{question.name}}</a>
         </li>
     </ul>
 </div>

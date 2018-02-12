@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input} from "@angular/core";
 
 import {Test} from 'itpm-shared';
 
@@ -7,15 +7,11 @@ import {Test} from 'itpm-shared';
   templateUrl: './slider.component.html',
   styleUrls: [`./slider.component.css`]
 })
-export class SliderComponent implements OnInit {
+export class SliderComponent {
 
   @Input() questions: Test[];
 
-  ngOnInit(): void {
-
-  }
-
-  doNothing($event, questionIndex: number) {
+  public scrollTo($event, questionIndex: number) {
     $event.preventDefault();
     const element = document.querySelector(`#question_${questionIndex}`);
     if (element) {
