@@ -7,11 +7,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import {ToastModule} from "ng2-toastr";
 
-import {AuthModule, ITPMModule} from "itpm-shared";
+import {AuthModule, ITPMModule, AuthGuard} from "itpm-shared";
 
 import {AppComponent} from "./app.component";
 import {HomeComponent} from "./home/home.component";
-import {AuthGuard} from "./shared/guards/auth";
 
 import {environment} from "../environments/environment";
 
@@ -51,7 +50,6 @@ const appRoutes: Routes = [
     HomeComponent,
   ],
   providers: [
-    AuthGuard,
   ],
   bootstrap: [AppComponent]
 })

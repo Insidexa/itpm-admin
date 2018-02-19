@@ -21,7 +21,6 @@ import {TheoryService} from "./components/theory/theory.service";
 import {TestService} from "./components/test/test.service";
 import {SchemaPageComponent} from "./components/schema/schema-page.component";
 import {SchemaPageService} from "./components/schema/schema-page.service";
-import {SliderComponent} from "./components/test/slider/slider.component";
 import {CourseFormComponent} from "./components/course/course/course-form/course-form.component";
 import {LessonFormComponent} from "./components/lesson/lesson-form/lesson-form.component";
 import {LessonsComponent} from "./components/lesson/lessons.component";
@@ -166,7 +165,6 @@ const routes: Routes = [
     TheoryComponent,
     TestComponent,
     SchemaPageComponent,
-    SliderComponent
   ]
 })
 export class CourseModule {
